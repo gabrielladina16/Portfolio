@@ -1,10 +1,15 @@
 :root {
   --paper: #f0efe9;
   --ink: #11110f;
-  --muted: #72716c;
+  --muted: #80807e;
+  --body-on-light: #80807e;
+  --body-on-dark: #838383;
+  --description-size: clamp(16px, 1.5675vw, 22px);
+  --description-leading: 1.52;
   --line: rgba(17, 17, 15, 0.15);
   --serif: "Instrument Serif", Georgia, serif;
-  --sans: "DM Sans", Arial, sans-serif;
+  --heading: "DM Sans", Arial, sans-serif;
+  --sans: "Manrope", Arial, sans-serif;
   --radius: 18px;
   --shell: min(1440px, calc(100vw - 64px));
 }
@@ -12,6 +17,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--heading); }
 a { color: inherit; text-decoration: none; }
 button { color: inherit; font: inherit; }
 svg { display: inline-block; width: 1em; vertical-align: -0.12em; }

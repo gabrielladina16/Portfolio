@@ -20,12 +20,17 @@ Portfolio/
 ├── public/
 ├── src/
 │   ├── assets/
-│   │   └── textureee.png      # Supplied texture overlay
+│   │   ├── textureee.png      # Supplied texture overlay
+│   │   ├── gallery-coral-3d.jpg
+│   │   ├── gallery-blue-3d.jpg
+│   │   └── gallery-lime-3d.jpg
 │   ├── components/            # One focused file per page section
 │   │   ├── About.js
 │   │   ├── Footer.js
 │   │   ├── Header.js
 │   │   ├── Hero.js
+│   │   ├── HomeGallery.js
+│   │   ├── Playground.js
 │   │   ├── ProjectCard.js
 │   │   ├── Work.js
 │   │   └── icons.js

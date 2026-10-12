@@ -9,7 +9,7 @@ export function Footer() {
         <a class="email-link" href="mailto:hello@example.com">hello@example.com ${arrowUpRight}</a>
         <div class="footer-bottom">
           <p>© <span data-year></span> Your Name</p>
-          <div><a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#top">Back to top ↑</a></div>
+          <div><a href="#">LinkedIn</a><a href="#">Instagram</a><a href="#/">Home ↑</a></div>
         </div>
       </div>
     </footer>`;

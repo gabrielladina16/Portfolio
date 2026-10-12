@@ -9,7 +9,7 @@ export function Hero() {
       </div>
       <div class="hero-aside reveal">
         <p>Independent designer and developer crafting thoughtful digital products, identities, and stories.</p>
-        <a class="text-link" href="#work">Explore selected work ${arrowDown}</a>
+        <a class="text-link" href="#/work">Explore selected work ${arrowDown}</a>
       </div>
     </section>`;
 }
