@@ -169,3 +169,23 @@
   max-width: min(46ch, 520px);
 }
 .bocil-context > p { max-width: 52ch; }
+.typelab-case .bocil-context > p { width: 100%; max-width: none; }
+.bocil-meta dt { font-size: var(--description-size); line-height: var(--description-leading); }
+
+/* Research and exploration copy share the introduction's type size. */
+.bocil-insights-grid > div > p,
+.bocil-insight-list li > span,
+.bocil-insight-list h3,
+.bocil-insight-list p { font-size: 15px; line-height: 1.58; }
+@media (min-width: 1248px) {
+  .bocil-insights-grid > div > p,
+  .bocil-insight-list li > span,
+  .bocil-insight-list h3,
+  .bocil-insight-list p { font-size: clamp(17px, 1.1875vw, 18px); line-height: 1.55; }
+}
+@media (max-width: 680px) {
+  .bocil-insights-grid > div > p,
+  .bocil-insight-list li > span,
+  .bocil-insight-list h3,
+  .bocil-insight-list p { font-size: 14px; }
+}

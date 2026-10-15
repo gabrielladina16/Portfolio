@@ -1,0 +1,3 @@
+Built-in imagegen edit.
+
+Edit this existing TypeLab iPad mockup by outpainting ONLY a little extra tabletop above and below. Expand the canvas vertically from approximately 16:9 to 16:10, adding about 5% of the current image height at the top and 5% at the bottom. Keep the original image content and width intact in the center: identical iPad, exact screen UI and typography, identical pencil, camera perspective, size, lighting, shadows and textures. Do not zoom, reframe, crop or redesign the iPad or screen. Extend only the gray concrete tabletop and its existing lighting naturally and seamlessly into the new top and bottom margins. No new objects or text. Output the expanded finished mockup.

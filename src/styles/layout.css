@@ -151,8 +151,10 @@
 .typelab-case .typelab-media-row[data-ratio="70-30"] { --media-columns: minmax(0,7fr) minmax(0,3fr); }
 .typelab-case .typelab-media-row figure { background: #d1d1d1; }
 .typelab-case .bocil-dark .typelab-media-row figure { background: #101010; }
-.typelab-case .typelab-final-showcase { background-image: url("../assets/typelab-wallpaper.png"); }
-.typelab-case .typelab-final-placeholder { aspect-ratio: 16 / 10; background: #fff; }
+.typelab-case .typelab-final-showcase { display: block; background: none; aspect-ratio: auto; min-height: 0; padding: 0; }
+.typelab-case .typelab-final-showcase .bocil-image { width: 100%; border-radius: 0; }
+.typelab-case .typelab-final-image img { margin-top: 0; border-radius: 0; }
+.typelab-case .typelab-final-image::after { opacity: .02; }
 @media (max-width: 680px) {
   .typelab-case .typelab-media-row figure::before { content: ""; width: 100%; aspect-ratio: 16 / 10; }
 }
@@ -338,7 +340,8 @@
 /* Personal AI: one centered demonstration beneath the introduction. */
 .bocil-history-media { margin-top: 60px; }
 .bocil-history-media .bocil-image { position: relative; width: min(100%, 1000px); margin-inline: auto; overflow: hidden; border-radius: 10px; }
-.bocil-history-media video { display: block; width: 100%; height: auto; border-radius: 10px; }
+.bocil-history-media .bocil-image > img,
+.bocil-history-media .bocil-image > video { display: block; width: 100%; height: auto; border-radius: inherit; }
 @media (min-width: 901px) {
   .bocil-history-media { margin-top: clamp(48px, 4vw, 80px); }
 }

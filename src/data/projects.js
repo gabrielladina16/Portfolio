@@ -20,7 +20,7 @@ export const projects = [
     number: "03",
     title: "TypeLab",
     summary: "A typography playground for building type systems and exploring them in real layouts.",
-    tags: ["Product Design", "Typography", "iPadOS"],
+    tags: ["Product Design", "Typography", "UI/UX"],
     tone: "neutral",
   },
   {
@@ -44,7 +44,15 @@ export const projects = [
     number: "06",
     title: "Sustainopia",
     summary: "An architectural project exploring how sustainable design can shape a more connected way of living.",
-    tags: ["Architecture", "Sustainability", "Urban Design"],
+    tags: ["Architecture", "Urban Design", "3D Modelling"],
     tone: "moss",
+  },
+  {
+    id: "higher-hopes",
+    number: "07",
+    title: "Higher Hopes",
+    summary: "A 2D climbing game where players guide a monkey up a challenging cliff, navigating obstacles along the way.",
+    tags: ["Illustration", "Game Art", "UI/UX"],
+    tone: "brown",
   },
 ];

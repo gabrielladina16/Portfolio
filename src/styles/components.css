@@ -6,9 +6,94 @@
 .tone-berry { background: #9d465d; }
 .tone-moss { background: #465838; }
 .tone-neutral { background: #d9d9d9; }
+.tone-brown { background: #8b654b; }
+/* Bracket spans are anchored to the cropped screenshot's control boundaries. */
+.typelab-system-diagrams { margin-top: clamp(48px, 5vw, 80px); }
+.typelab-system-label { margin-top: 0; margin-bottom: 32px; color: var(--body-on-light); font: 600 clamp(22px,2vw,30px)/1.25 var(--heading); letter-spacing: -.025em; }
+.typelab-system-panel { padding: 48px 0; background: #d1d1d1; }
+.typelab-system-panel + .typelab-system-label { margin-top: 72px; }
+.typelab-system-diagram { --system-diagram-gap: clamp(36px,4vw,64px); width: min(1600px, calc(100vw - 96px)); margin-inline: auto; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,2.4fr) minmax(0,1fr); gap: var(--system-diagram-gap); align-items: stretch; }
+.typelab-system-screenshot { margin: 0; border-radius: 20px; overflow: hidden; }
+.typelab-system-screenshot img { display: block; width: 100%; height: auto; margin-top: -2.5%; }
+.typelab-system-callout { position: relative; }
+.typelab-system-callout h3 { margin: 0 0 3px; font: 700 var(--description-size)/var(--description-leading) var(--sans); letter-spacing: normal; }
+.typelab-system-callout p { margin: 0; color: var(--body-on-light); font: 500 var(--description-size)/var(--description-leading) var(--sans); }
+.typelab-system-callout::before { content: ""; position: absolute; width: 26px; border: 1.5px dashed #80807e; pointer-events: none; box-sizing: border-box; }
+.typelab-system-callout--left { --start: 10.2%; --span: 68.8%; }
+.typelab-system-diagram--compare .typelab-system-callout--left { --start: 10.2%; --span: 72.9%; }
+.typelab-system-callout--left::before { top: var(--start); height: var(--span); right: calc(6px - var(--system-diagram-gap)); border-right: 0; border-radius: 10px 0 0 10px; }
+.typelab-system-callout-copy { position: absolute; width: 100%; top: calc(var(--start) + var(--span) / 2); transform: translateY(-50%); }
+.typelab-system-callouts { position: relative; }
+.typelab-system-callout--right { position: absolute; top: var(--start); height: var(--span); width: 100%; display: flex; flex-direction: column; justify-content: center; }
+.typelab-system-callout--right::before { top: 0; height: 100%; left: calc(6px - var(--system-diagram-gap)); border-left: 0; border-radius: 0 10px 10px 0; }
+.typelab-system-callout--scale { --start: 10.2%; --span: 13.8%; }
+.typelab-system-callout--typefaces { --start: 25.6%; --span: 28.1%; }
+.typelab-system-callout--refinement { --start: 56.7%; --span: 39.3%; }
+.typelab-system-callout--roles { --start: 45%; --span: 55%; }
+@media (max-width: 1100px) {
+  .typelab-system-diagram { width: calc(100vw - 64px); grid-template-columns: repeat(2,minmax(0,1fr)); gap: 28px; }
+  .typelab-system-screenshot { grid-column: 1 / -1; grid-row: 1; }
+  .typelab-system-callout::before { display: none; }
+  .typelab-system-callout-copy, .typelab-system-callout--right { position: static; height: auto; transform: none; }
+  .typelab-system-callouts { display: grid; gap: 24px; }
+}
+@media (max-width: 680px) {
+  .typelab-system-panel { padding-block: 28px; }
+  .typelab-system-diagram { width: calc(100vw - 40px); grid-template-columns: 1fr; gap: 24px; }
+  .typelab-system-panel + .typelab-system-label { margin-top: 48px; }
+}
+.typelab-case .typelab-system-media .bocil-image,
+.typelab-case .typelab-system-media video { border-radius: 20px; }
+.typelab-case .typelab-system-media .bocil-image { width: min(90%, 900px); }
+/* Compose keeps Bocil's media row height, with staggered cards and a full video frame. */
+.typelab-case .typelab-compose-media { --media-columns: minmax(0,2fr) minmax(0,3fr); }
+.typelab-case .typelab-compose-media figure { background: #d1d1d1; }
+.typelab-case .typelab-compose-media figure::after { opacity: .18; }
+.page-typelab ~ .texture {
+  -webkit-mask-image: linear-gradient(to bottom, #000 var(--compose-texture-top, 100vh), rgba(0,0,0,.45) var(--compose-texture-top, 100vh), rgba(0,0,0,.45) var(--compose-texture-bottom, 100vh), #000 var(--compose-texture-bottom, 100vh));
+  mask-image: linear-gradient(to bottom, #000 var(--compose-texture-top, 100vh), rgba(0,0,0,.45) var(--compose-texture-top, 100vh), rgba(0,0,0,.45) var(--compose-texture-bottom, 100vh), #000 var(--compose-texture-bottom, 100vh));
+}
+.typelab-case .typelab-compose-cards { overflow: hidden; }
+.typelab-compose-guidelines { position: absolute; z-index: 1; inset: 0; overflow: hidden; }
+.typelab-compose-guidelines img { position: absolute; bottom: 0; left: 8%; width: 40%; height: auto; transform: translateY(28.5%); clip-path: inset(3.9% 5.4% 28.5% 5.4%); }
+.typelab-compose-style { position: absolute; z-index: 1; top: 0; right: 10%; width: 37%; height: auto; transform: translateY(-3.5%); clip-path: inset(3.5% 3.5% 3.5% 3.5%); }
+.typelab-case .typelab-compose-video { padding: 0; }
+.typelab-compose-video video { position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%); display: block; width: min(88%, calc(31.5vw * .93 * 1920 / 1392)); height: auto; border-radius: 10px; }
+@media (min-width: 681px) and (max-width: 900px) {
+  .typelab-case .typelab-compose-media { height: 45vw; }
+  .typelab-case .typelab-compose-media figure { min-height: 0; height: 100%; padding: 0; }
+  .typelab-compose-video video { width: min(88%, calc(45vw * .93 * 1920 / 1392)); }
+}
+@media (max-width: 680px) {
+  .typelab-case .typelab-compose-media figure::before { content: none; }
+  .typelab-case .typelab-compose-cards { height: 95vw; padding: 0; }
+  .typelab-case .typelab-compose-video { padding: 24px 16px; }
+  .typelab-compose-video video { position: relative; top: auto; left: auto; transform: none; width: 100%; height: auto; }
+}
 .project-card[data-project="typelab"] .project-visual { background: #a8a8a8; }
 .project-cover-image { position: absolute; z-index: 1; top: 20%; left: 9%; display: block; width: 82%; height: auto; border-radius: 10px; transition: transform .55s cubic-bezier(.2,.75,.25,1); }
+.project-cover-photo { position: absolute; z-index: 1; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.2,.75,.25,1); }
+.project-card:hover .project-cover-photo,
+.project-card:focus-within .project-cover-photo { transform: scale(1.035); }
+@media (prefers-reduced-motion: reduce) {
+  .project-cover-photo { transition: none; }
+}
+.page-work .project-card[data-project="bocil"] .project-cover-image { top: 7%; }
 .project-card:hover .project-cover-image { transform: scale(1.035); }
+.project-card:focus-visible .project-cover-image,
+.project-card:focus-visible .placeholder-ui { transform: scale(1.035); }
+.project-explorer { padding-block: clamp(80px, 9vw, 150px); }
+.project-explorer h2 { margin: 0 0 48px; font: 700 clamp(26px, 2.28vw, 34px)/1.3 var(--heading); letter-spacing: -.025em; }
+.project-explorer h2 span { color: #777773; }
+.project-explorer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; max-width: 900px; }
+.project-explorer .project-visual { aspect-ratio: 1.42; border-radius: 10px; }
+.project-explorer p { margin: 18px 0 0; color: var(--body-on-light); font: 500 18px/1.45 var(--sans); }
+.project-explorer strong { font-family: var(--heading); font-weight: 600; }
+@media (max-width: 680px) {
+  .project-explorer-grid { gap: 18px; }
+  .project-explorer p { font-size: 15px; }
+  .project-explorer h2 { font-size: 24px; margin-bottom: 32px; }
+}
 .project-visual::before, .panel-surface::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url("../assets/textureee.png") center / cover; opacity: .24; mix-blend-mode: multiply; }
 .project-label, .placeholder-tag { position: absolute; z-index: 3; top: 18px; left: 18px; padding: 8px 11px; border-radius: 999px; background: rgba(255,255,255,.78); backdrop-filter: blur(10px); font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 

@@ -1,3 +1,4 @@
+import { ProjectExplorer } from "./ProjectExplorer.js";
 import { CaseStudyFooter } from "./CaseStudyFooter.js";
 import headerPhoto from "../assets/bocil-header.png";
 import homeScreenVideo from "../assets/bocil-home-screen.mp4";
@@ -22,13 +23,14 @@ export function BocilCaseStudy() {
               <p>For a 14-day challenge at the Apple Developer Academy, we built Bocil, a physical AI companion supported by a macOS app, exploring AI interaction beyond the screen through IoT.</p>
               <div class="bocil-briefs">
                 <div><h2>Problem</h2><p>How might we create a physical AI companion that helps people stay focused and productive while making everyday assistance feel more natural?</p></div>
-                <div><h2>Outcome</h2><p>We designed and built a working IoT prototype with a supporting macOS app in 14 days.</p></div>
+                <div><h2>Outcome</h2><p>We designed and built a working IoT prototype with a supporting macOS app.</p></div>
               </div>
             </div>
             <dl class="bocil-meta">
+              <div><dt>Year</dt><dd>2026</dd></div>
               <div><dt>Role</dt><dd>Product designer &amp; developer</dd></div>
               <div><dt>Timeline</dt><dd>14 days</dd></div>
-              <div><dt>Team</dt><dd>1 designer, 1 Project Manager, &amp; 3 developers</dd></div>
+              <div><dt>Team</dt><dd>1 designer, 1 Project Manager,<br />&amp; 3 developers</dd></div>
             </dl>
           </div>
         </div>
@@ -108,5 +110,6 @@ export function BocilCaseStudy() {
         </div>
       </section>
     </article>
+    ${ProjectExplorer("bocil")}
     ${CaseStudyFooter()}`;
 }

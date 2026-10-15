@@ -286,11 +286,21 @@ export function initInteractions(currentRoute = "home") {
 
   const brand = header.querySelector(".brand");
   const projectHero = document.querySelector(".bocil-case .bocil-hero");
+  const composeMedia = document.querySelector(".typelab-compose-media");
+  const texture = document.querySelector(".texture");
   const updateHeader = () => {
     header.classList.toggle("is-scrolled", window.scrollY > 30);
     const showBack = Boolean(projectHero && projectHero.getBoundingClientRect().bottom <= header.getBoundingClientRect().bottom);
     brand.classList.toggle("is-project-back", showBack);
     brand.setAttribute("aria-label", showBack ? "Back to Work" : "Go to work");
+    if (composeMedia && texture) {
+      const rect = composeMedia.getBoundingClientRect();
+      const styleCard = composeMedia.querySelector(".typelab-compose-style");
+      const top = Math.min(rect.top, styleCard?.getBoundingClientRect().top ?? rect.top);
+      const clampToViewport = (value) => Math.max(0, Math.min(window.innerHeight, value));
+      texture.style.setProperty("--compose-texture-top", `${clampToViewport(top)}px`);
+      texture.style.setProperty("--compose-texture-bottom", `${clampToViewport(rect.bottom)}px`);
+    }
   };
   window.addEventListener("scroll", updateHeader, { passive: true, signal: headerScrollController.signal });
   window.addEventListener("resize", updateHeader, { passive: true, signal: headerScrollController.signal });
