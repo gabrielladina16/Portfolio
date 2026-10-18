@@ -397,7 +397,7 @@
 }
 .bocil-footer { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 32px max(32px, 5vw); background: #232323; color: var(--body-on-dark); font: 400 14px/1.5 var(--sans); }
 /* Match the page canvas to the footer so no light seam appears at its edge. */
-body[data-route="bocil"], body[data-route="typelab"] { background: #232323; }
+body[data-route="bocil"], body[data-route="typelab"], body[data-route="sustainopia"] { background: #232323; }
 .page-bocil, .page-typelab { background: var(--paper); }
 .bocil-footer p { margin: 0; }
 .bocil-footer-socials { display: flex; align-items: center; gap: 22px; color: white; }

@@ -27,17 +27,6 @@
 
 @media (max-width: 680px) {
   :root { --shell: calc(100vw - 28px); --radius: 13px; }
-  body::before {
-    content: "";
-    position: fixed;
-    z-index: 1100;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: env(safe-area-inset-top, 0px);
-    background: #fff;
-    pointer-events: none;
-  }
   .texture {
     background-size: 175% auto;
     background-position: center top;
@@ -45,8 +34,9 @@
   .site-header { top: calc(env(safe-area-inset-top, 0px) + 14px); width: calc(100vw - 28px); min-height: 48px; align-items: flex-start; }
   .site-header::before,
   .site-header::after {
-    top: -14px;
-    height: 170px;
+    /* Extend the navbar treatment through the iPhone status-bar safe area. */
+    top: calc(-14px - env(safe-area-inset-top, 0px));
+    height: calc(170px + env(safe-area-inset-top, 0px));
   }
   .site-header::after {
     background-size: 480px auto;

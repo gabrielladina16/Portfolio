@@ -24,7 +24,7 @@ export function initInteractions(currentRoute = "home") {
     });
   };
 
-  const activeRoute = ["bocil", "typelab"].includes(currentRoute) ? "work" : currentRoute;
+  const activeRoute = ["bocil", "typelab", "sustainopia"].includes(currentRoute) ? "work" : currentRoute;
   setActiveLink(navLinks.find((link) => link.dataset.route === activeRoute));
 
   navLinks.forEach((link) => link.addEventListener("click", () => {
@@ -305,4 +305,77 @@ export function initInteractions(currentRoute = "home") {
   window.addEventListener("scroll", updateHeader, { passive: true, signal: headerScrollController.signal });
   window.addEventListener("resize", updateHeader, { passive: true, signal: headerScrollController.signal });
   updateHeader();
+  const movingTracks = [...document.querySelectorAll(".sustainopia-drawings-track, .sustainopia-render-track")];
+  const gallerySignal = headerScrollController.signal;
+  movingTracks.forEach(track => {
+    const viewport = track.parentElement;
+    const speed = track.classList.contains("sustainopia-drawings-track") ? 150 : 120;
+    let offset = 0;
+    let lastTime;
+    let frame;
+    let paused = false;
+    let ignoreHoverUntilMove = false;
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pause = () => { if (!ignoreHoverUntilMove) paused = true; };
+    const resume = () => { paused = false; ignoreHoverUntilMove = false; };
+    viewport.addEventListener("pointerenter", pause, { signal: gallerySignal });
+    viewport.addEventListener("pointerleave", resume, { signal: gallerySignal });
+    viewport.addEventListener("pointermove", () => {
+      ignoreHoverUntilMove = false;
+      paused = true;
+    }, { signal: gallerySignal });
+    viewport.addEventListener("keydown", event => { if (event.key === "Tab") paused = true; }, { signal: gallerySignal });
+    viewport.addEventListener("focusout", event => { if (!viewport.contains(event.relatedTarget)) resume(); }, { signal: gallerySignal });
+    viewport.addEventListener("galleryresume", () => {
+      paused = false;
+      ignoreHoverUntilMove = true;
+      // Focus must never horizontally scroll the clipped track into view.
+      viewport.scrollLeft = 0;
+    }, { signal: gallerySignal });
+    const tick = time => {
+      const delta = lastTime === undefined ? 0 : Math.min((time - lastTime) / 1000, .05);
+      lastTime = time;
+      if (!paused && !document.body.classList.contains("sustainopia-modal-open") && !motionPreference.matches) {
+        const width = track.firstElementChild.getBoundingClientRect().width;
+        if (width > 0) offset = (offset + delta * speed) % width;
+        track.style.setProperty("--gallery-offset", `${-offset}px`);
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    gallerySignal.addEventListener("abort", () => cancelAnimationFrame(frame), { once: true });
+  });
+
+  const lightbox = document.querySelector(".sustainopia-lightbox");
+  if (lightbox) {
+    let opener;
+    document.querySelectorAll(".sustainopia-zoom-trigger").forEach(button => {
+      button.addEventListener("click", () => {
+        opener = button;
+        lightbox.classList.toggle("is-render", Boolean(button.closest(".sustainopia-render-window")));
+        const image = lightbox.querySelector("img");
+        image.src = button.dataset.zoomSrc;
+        image.alt = button.dataset.zoomLabel;
+        lightbox.querySelector(".sustainopia-lightbox-caption").textContent = button.dataset.zoomLabel;
+        lightbox.querySelector(".sustainopia-lightbox-scroll").scrollTo(0, 0);
+        lightbox.classList.remove("is-zoomed");
+        lightbox.showModal();
+        document.body.classList.add("sustainopia-modal-open");
+      });
+    });
+    lightbox.querySelector(".sustainopia-lightbox-close").addEventListener("click", () => lightbox.close());
+    lightbox.addEventListener("click", event => { if (event.target === lightbox) lightbox.close(); });
+    lightbox.querySelector("img").addEventListener("click", () => lightbox.classList.toggle("is-zoomed"));
+    lightbox.addEventListener("close", () => {
+      document.body.classList.remove("sustainopia-modal-open");
+      const viewport = opener?.closest(".sustainopia-drawings-window, .sustainopia-render-window");
+      const clearGalleryFocus = () => {
+        const active = document.activeElement;
+        if (viewport?.contains(active) || active === viewport) active.blur();
+      };
+      clearGalleryFocus();
+      requestAnimationFrame(clearGalleryFocus);
+      viewport?.dispatchEvent(new Event("galleryresume"));
+    });
+  }
 }

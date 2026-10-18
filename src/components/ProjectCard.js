@@ -9,7 +9,7 @@ export function ProjectCover(project) {
 }
 
 export function ProjectCard(project, index) {
-  const projectHref = ["bocil", "typelab"].includes(project.id) ? `#/work/${project.id}` : "#/work";
+  const projectHref = ["bocil", "typelab", "sustainopia"].includes(project.id) ? `#/work/${project.id}` : "#/work";
   return `
     <article class="project-card reveal" data-project="${project.id}" style="--delay:${index * 70}ms">
       <a href="${projectHref}" aria-label="View ${project.title} project">
