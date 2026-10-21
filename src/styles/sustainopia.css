@@ -65,11 +65,6 @@
 .sustainopia-drawings-track:has(img:hover),
 .sustainopia-drawings-window:focus-within .sustainopia-drawings-track { animation-play-state: paused; }
 @keyframes sustainopia-drawings-scroll { to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) {
-  .sustainopia-drawings-window { overflow-x: auto; }
-  .sustainopia-drawings-track { animation: none; }
-  .sustainopia-drawings-group[aria-hidden="true"] { display: none; }
-}
 @media (max-width: 1100px) {
   .sustainopia-plan-layout { grid-template-columns: minmax(0, 1fr) 230px; gap: 24px; }
   .sustainopia-plan-legend { font-size: 14px; }
@@ -132,11 +127,6 @@ body.sustainopia-modal-open { overflow: hidden; }
 @media (max-width: 680px) {
  .sustainopia-render-group figure { width: 85vw; }
  .sustainopia-ending { width: calc(100% - 28px); padding-bottom: 28px; }
-}
-@media (prefers-reduced-motion: reduce) {
- .sustainopia-render-window { overflow-x: auto; }
- .sustainopia-render-track { animation: none; }
- .sustainopia-render-group[aria-hidden="true"] { display: none; }
 }
 
 /* Shared case-study framing and balanced research-section spacing. */

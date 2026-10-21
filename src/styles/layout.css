@@ -7,18 +7,19 @@
 }
 .site-header::before,
 .site-header::after {
-  content: ""; position: absolute; z-index: -1; top: -32px; left: 50%;
+  content: ""; position: absolute; z-index: 0; top: -32px; left: 50%;
   width: 100vw; height: 185px; transform: translateX(-50%); pointer-events: none;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 35%, rgba(0,0,0,.7) 58%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 35%, rgba(0,0,0,.7) 58%, transparent 100%);
 }
 .site-header::before {
-  background: linear-gradient(to bottom, rgba(255,255,255,.018), rgba(255,255,255,.008) 55%, transparent);
+  /* Keep a visible surface when browser/OS transparency effects are disabled. */
+  background: linear-gradient(to bottom, rgba(240,239,233,.28), rgba(240,239,233,.12) 55%, transparent);
   backdrop-filter: blur(10px) saturate(105%); -webkit-backdrop-filter: blur(10px) saturate(105%);
 }
 .site-header::after {
   background: url("../assets/textureee.png") center top / 640px auto repeat;
-  opacity: .3; mix-blend-mode: multiply;
+  opacity: .3;
 }
 .site-header > * { position: relative; z-index: 1; pointer-events: auto; }
 .brand { display: flex; align-items: center; font-weight: 600; transition: transform .3s ease; }

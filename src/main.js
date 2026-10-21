@@ -2,6 +2,7 @@ import "./styles/main.css";
 import { Header } from "./components/Header.js";
 import { Work } from "./components/Work.js";
 import { BocilCaseStudy } from "./components/BocilCaseStudy.js";
+import { BrewTimeCaseStudy } from "./components/BrewTimeCaseStudy.js";
 import { TypeLabCaseStudy } from "./components/TypeLabCaseStudy.js";
 import { SustainopiaCaseStudy } from "./components/SustainopiaCaseStudy.js";
 import { Playground } from "./components/Playground.js";
@@ -12,13 +13,14 @@ const pages = {
   work: () => Work(),
   bocil: () => BocilCaseStudy(),
   typelab: () => TypeLabCaseStudy(),
+  brewtime: () => BrewTimeCaseStudy(),
   sustainopia: () => SustainopiaCaseStudy(),
   playground: () => Playground(),
   about: () => About(),
 };
 
 function getRoute() {
-  return ({ "#/work/bocil": "bocil", "#/work/typelab": "typelab", "#/work/sustainopia": "sustainopia", "#/playground": "playground", "#/about": "about" })[location.hash] || "work";
+  return ({ "#/work/bocil": "bocil", "#/work/typelab": "typelab", "#/work/brewtime": "brewtime", "#/work/sustainopia": "sustainopia", "#/playground": "playground", "#/about": "about" })[location.hash] || "work";
 }
 
 function renderPage() {

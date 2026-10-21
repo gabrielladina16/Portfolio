@@ -3,6 +3,13 @@ let headerScrollController;
 export function initInteractions(currentRoute = "home") {
   headerScrollController?.abort();
   headerScrollController = new AbortController();
+  document.querySelectorAll("video[data-playback-rate]").forEach((video) => {
+    const rate = Number(video.dataset.playbackRate);
+    if (Number.isFinite(rate) && rate > 0) {
+      video.defaultPlaybackRate = rate;
+      video.playbackRate = rate;
+    }
+  });
   const header = document.querySelector("[data-header]");
   const menuButton = document.querySelector(".menu-button");
   const nav = document.querySelector(".main-nav");
@@ -24,7 +31,7 @@ export function initInteractions(currentRoute = "home") {
     });
   };
 
-  const activeRoute = ["bocil", "typelab", "sustainopia"].includes(currentRoute) ? "work" : currentRoute;
+  const activeRoute = ["bocil", "typelab", "brewtime", "sustainopia"].includes(currentRoute) ? "work" : currentRoute;
   setActiveLink(navLinks.find((link) => link.dataset.route === activeRoute));
 
   navLinks.forEach((link) => link.addEventListener("click", () => {
@@ -315,7 +322,6 @@ export function initInteractions(currentRoute = "home") {
     let frame;
     let paused = false;
     let ignoreHoverUntilMove = false;
-    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const pause = () => { if (!ignoreHoverUntilMove) paused = true; };
     const resume = () => { paused = false; ignoreHoverUntilMove = false; };
     viewport.addEventListener("pointerenter", pause, { signal: gallerySignal });
@@ -335,7 +341,7 @@ export function initInteractions(currentRoute = "home") {
     const tick = time => {
       const delta = lastTime === undefined ? 0 : Math.min((time - lastTime) / 1000, .05);
       lastTime = time;
-      if (!paused && !document.body.classList.contains("sustainopia-modal-open") && !motionPreference.matches) {
+      if (!paused && !document.body.classList.contains("sustainopia-modal-open")) {
         const width = track.firstElementChild.getBoundingClientRect().width;
         if (width > 0) offset = (offset + delta * speed) % width;
         track.style.setProperty("--gallery-offset", `${-offset}px`);
