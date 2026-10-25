@@ -105,7 +105,18 @@
 
 .high-hopes-scene-window { overflow-x: hidden; overflow-y: hidden; scroll-behavior: auto; scrollbar-width: none; position: relative; background: #57432b; }
 .high-hopes-scene-window::-webkit-scrollbar { display: none; }
-.high-hopes-scene-track { width: 100%; transform: translate3d(0, var(--scene-offset, 0px), 0); will-change: transform; }
+/* Native animation starts independently of image decode and interaction setup.
+   cqw measures this frame; its height is its width divided by 2.73. */
+.high-hopes-scene-window { container-type: inline-size; }
+.high-hopes-scene-track {
+  width: 100%;
+  animation: high-hopes-scene-pan var(--scene-duration, 12s) linear infinite;
+  will-change: transform;
+}
+@keyframes high-hopes-scene-pan {
+  0%, 5%, 100% { transform: translate3d(0, min(0px, calc(-100% + 100cqw / 2.73)), 0); }
+  52.5% { transform: translate3d(0, 0, 0); }
+}
 .high-hopes-scene-track img { display: block; width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .high-hopes-scene-track { will-change: auto; }

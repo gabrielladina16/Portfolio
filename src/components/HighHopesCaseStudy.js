@@ -129,8 +129,8 @@ export function HighHopesCaseStudy() {
             <h3 class="typelab-system-label" id="terrain-title">01/Terrain &amp; Backgrounds</h3>
             <div class="high-hopes-asset-surface"><div class="bocil-shell">
             <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan role="region" aria-label="Climbing scene, automatically panning up and down.">
-              <div class="high-hopes-scene-track">
-                <img src="${sceneOne}" alt="High Hopes forest-fire climbing environment with cliff platforms and the monkey character" />
+              <div class="high-hopes-scene-track" style="--scene-duration: 10s">
+                <img width="2200" height="2207" src="${sceneOne}" alt="High Hopes forest-fire climbing environment with cliff platforms and the monkey character" />
               </div>
             </div>
             <div class="hh-terrain-board hh-terrain-board--compact" aria-label="Cliffs, climbing stones, moss, ground and vegetation artwork">
@@ -155,8 +155,8 @@ export function HighHopesCaseStudy() {
             <h3 class="typelab-system-label" id="environment-title">02/Environmental Assets</h3>
             <div class="high-hopes-asset-surface"><div class="bocil-shell">
             <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan role="region" aria-label="Climbing scene, automatically panning up and down.">
-              <div class="high-hopes-scene-track">
-                <img src="${sceneTwo}" alt="High Hopes second climbing environment with ropes, cliff platforms and monkey characters" />
+              <div class="high-hopes-scene-track" style="--scene-duration: 18s">
+                <img width="2200" height="3632" src="${sceneTwo}" alt="High Hopes second climbing environment with ropes, cliff platforms and monkey characters" />
               </div>
             </div>
             <div class="hh-environment-board" aria-label="Tree, branches, foliage, ropes and cracking stone assets">
@@ -182,8 +182,8 @@ export function HighHopesCaseStudy() {
             <h3 class="typelab-system-label" id="additional-title">03/Additional Environment Assets</h3>
             <div class="high-hopes-asset-surface"><div class="bocil-shell">
             <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan role="region" aria-label="Climbing scene, automatically panning up and down.">
-              <div class="high-hopes-scene-track">
-                <img src="${sceneThree}" alt="High Hopes third climbing environment with the cliff summit, rope platforms and monkey character" />
+              <div class="high-hopes-scene-track" style="--scene-duration: 12s">
+                <img width="2200" height="2582" src="${sceneThree}" alt="High Hopes third climbing environment with the cliff summit, rope platforms and monkey character" />
                 <div class="high-hopes-scene-fire" aria-hidden="true"><img class="high-hopes-scene-fire-background" src="${fireBackground}" alt="" /><img class="high-hopes-scene-fire-animation" src="${fireAnimation}" alt="" /></div>
                 <div class="high-hopes-helicopter-slot" data-helicopter-slot><img src="${helicopterAnimation}" alt="Animated rescue helicopter flying above the cliff" /></div>
                 <div class="high-hopes-helicopter-slot high-hopes-helicopter-slot--small"><img src="${helicopterAnimation}" alt="Smaller animated rescue helicopter in the distance" /></div>

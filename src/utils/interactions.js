@@ -391,58 +391,6 @@ export function initInteractions(currentRoute = "home") {
     gallerySignal.addEventListener("abort", () => cancelAnimationFrame(frame), { once: true });
   });
 
-  document.querySelectorAll("[data-scene-pan]").forEach(viewport => {
-    const track = viewport.querySelector(".high-hopes-scene-track");
-    const image = track.firstElementChild;
-    const speed = 120; // Same pixels per second as Sustainopia's final render row.
-    let offset;
-    let direction = -1;
-    let bottomHoldRemaining = 1;
-    let lastTime;
-    let frame;
-    let range = 0;
-    const measureScene = () => {
-      range = Math.max(0, image.getBoundingClientRect().height - viewport.clientHeight);
-    };
-    const sceneResize = new ResizeObserver(measureScene);
-    sceneResize.observe(viewport);
-    sceneResize.observe(image);
-    const tick = time => {
-      const delta = lastTime === undefined ? 0 : Math.min((time - lastTime) / 1000, .05);
-      lastTime = time;
-      if (image.complete && image.naturalHeight > 0) {
-        // Begin at the bottom of the scene, pan to the top, then return.
-        if (offset === undefined) {
-          offset = range;
-          bottomHoldRemaining = 1;
-        } else {
-          offset = Math.min(offset, range);
-        }
-        if (!document.hidden && range > 0) {
-          const movingDelta = Math.max(0, delta - bottomHoldRemaining);
-          bottomHoldRemaining = Math.max(0, bottomHoldRemaining - delta);
-          offset += direction * movingDelta * speed;
-          if (offset <= 0) { offset = 0; direction = 1; }
-          if (offset >= range && direction === 1) {
-            offset = range;
-            direction = -1;
-            bottomHoldRemaining = 1;
-          }
-        }
-        track.style.setProperty("--scene-offset", `${-offset}px`);
-      }
-      frame = requestAnimationFrame(tick);
-    };
-    // A failed decode() promise must not prevent an already loaded image from panning.
-    image.addEventListener("load", measureScene, { signal: gallerySignal });
-    measureScene();
-    frame = requestAnimationFrame(tick);
-    gallerySignal.addEventListener("abort", () => {
-      cancelAnimationFrame(frame);
-      sceneResize.disconnect();
-    }, { once: true });
-  });
-
   const lightbox = document.querySelector(".sustainopia-lightbox");
   if (lightbox) {
     let opener;
