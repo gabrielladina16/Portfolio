@@ -402,7 +402,7 @@ export function initInteractions(currentRoute = "home") {
     let frame;
     let range = 0;
     const measureScene = () => {
-      range = Math.max(0, image.getBoundingClientRect().height - viewport.getBoundingClientRect().height - .5);
+      range = Math.max(0, viewport.scrollHeight - viewport.clientHeight);
     };
     const sceneResize = new ResizeObserver(measureScene);
     sceneResize.observe(viewport);
@@ -429,15 +429,14 @@ export function initInteractions(currentRoute = "home") {
             bottomHoldRemaining = 1;
           }
         }
-        track.style.transform = `translate3d(0, ${-offset}px, 0)`;
+        viewport.scrollTop = offset;
       }
       frame = requestAnimationFrame(tick);
     };
-    image.decode().then(() => {
-      if (gallerySignal.aborted) return;
-      measureScene();
-      frame = requestAnimationFrame(tick);
-    }).catch(() => {});
+    // A failed decode() promise must not prevent an already loaded image from panning.
+    image.addEventListener("load", measureScene, { signal: gallerySignal });
+    measureScene();
+    frame = requestAnimationFrame(tick);
     gallerySignal.addEventListener("abort", () => {
       cancelAnimationFrame(frame);
       sceneResize.disconnect();

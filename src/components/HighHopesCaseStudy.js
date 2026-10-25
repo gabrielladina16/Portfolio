@@ -128,7 +128,7 @@ export function HighHopesCaseStudy() {
           <section class="high-hopes-asset-group" aria-labelledby="terrain-title">
             <h3 class="typelab-system-label" id="terrain-title">01/Terrain &amp; Backgrounds</h3>
             <div class="high-hopes-asset-surface"><div class="bocil-shell">
-            <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan>
+            <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan role="region" aria-label="Climbing scene, automatically panning up and down.">
               <div class="high-hopes-scene-track">
                 <img src="${sceneOne}" alt="High Hopes forest-fire climbing environment with cliff platforms and the monkey character" />
               </div>
@@ -154,7 +154,7 @@ export function HighHopesCaseStudy() {
           <section class="high-hopes-asset-group" aria-labelledby="environment-title">
             <h3 class="typelab-system-label" id="environment-title">02/Environmental Assets</h3>
             <div class="high-hopes-asset-surface"><div class="bocil-shell">
-            <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan>
+            <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan role="region" aria-label="Climbing scene, automatically panning up and down.">
               <div class="high-hopes-scene-track">
                 <img src="${sceneTwo}" alt="High Hopes second climbing environment with ropes, cliff platforms and monkey characters" />
               </div>
@@ -181,7 +181,7 @@ export function HighHopesCaseStudy() {
           <section class="high-hopes-asset-group" aria-labelledby="additional-title">
             <h3 class="typelab-system-label" id="additional-title">03/Additional Environment Assets</h3>
             <div class="high-hopes-asset-surface"><div class="bocil-shell">
-            <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan>
+            <div class="high-hopes-scene high-hopes-scene-window" data-scene-pan role="region" aria-label="Climbing scene, automatically panning up and down.">
               <div class="high-hopes-scene-track">
                 <img src="${sceneThree}" alt="High Hopes third climbing environment with the cliff summit, rope platforms and monkey character" />
                 <div class="high-hopes-scene-fire" aria-hidden="true"><img class="high-hopes-scene-fire-background" src="${fireBackground}" alt="" /><img class="high-hopes-scene-fire-animation" src="${fireAnimation}" alt="" /></div>
