@@ -4,6 +4,7 @@
 .tone-sky { background: #9fc4d4; }
 .tone-sage { background: #a9b98a; }
 .tone-berry { background: #9d465d; }
+.tone-grab { background: #164b35; }
 .tone-moss { background: #465838; }
 .tone-neutral { background: #d9d9d9; }
 .tone-brown { background: #8b654b; }
@@ -137,6 +138,7 @@
 .page-work .project-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .page-work .project-title-row h3 { font-size: 19px; }
 .project-chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; }
+.project-card[data-project="sustainopia"] .project-chips { display: grid; grid-template-columns: repeat(2, max-content); justify-items: end; }
 .project-chips span { flex: 0 0 auto; padding: 6px 9px; border: 1px solid rgba(17,17,15,.08); border-radius: 999px; background: rgba(138,138,135,.13); color: #747470; font-size: 8px; font-weight: 700; line-height: 1; letter-spacing: .04em; text-transform: uppercase; }
 .page-work .project-info > p { min-height: 3em; margin: 13px 0 0; color: var(--body-on-light); font-size: 13px; line-height: 1.5; }
 .page-work .project-meta { margin-top: 17px; padding-top: 12px; font-size: 9px; }

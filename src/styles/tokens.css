@@ -34,3 +34,7 @@ svg { display: inline-block; width: 1em; vertical-align: -0.12em; }
 .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.75,.25,1); transition-delay: var(--delay, 0ms); }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* Keep rubber-band overscroll dark beyond the page's footer. */
+html, body { background-color: #232323; }
+#app { background: var(--paper); }

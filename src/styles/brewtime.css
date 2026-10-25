@@ -1,14 +1,20 @@
 .page-brewtime { background: var(--paper); }
 body[data-route="brewtime"] { background: #232323; }
 html:has(body[data-route="brewtime"]) { background: #232323; }
-.project-visual:has(.brewtime-cover) { background: #5e6831; }
+.project-visual:has(.brewtime-cover) { background: #232323; isolation: isolate; }
+.project-visual:has(.brewtime-cover)::after { content: ""; position: absolute; z-index: -1; inset: 0; background: url("../assets/brewtime-final-wallpaper.jpg") center / cover no-repeat; filter: grayscale(1) brightness(1.25); }
 .brewtime-cover { position: absolute; z-index: 1; inset: 0; transition: transform .55s cubic-bezier(.2,.75,.25,1); }
 .project-card:hover .brewtime-cover,
 .project-card:focus-within .brewtime-cover { transform: scale(1.035); }
 @media (prefers-reduced-motion: reduce) {
   .brewtime-cover { transition: none; }
 }
-.brewtime-cover-timer { position: absolute; display: block; width: 37%; height: auto; left: 10.5%; top: 20%; border-radius: 12px; }
+.brewtime-cover-timer { position: absolute; width: 37%; aspect-ratio: 1206 / 2622; left: 10.5%; top: 24%; }
+.brewtime-cover-timer video {
+  position: absolute; display: block; width: 113%; height: auto; max-width: none; left: -6.5%; top: -2.3%;
+  -webkit-mask: url("../assets/brewtime-device-mask.svg") center / 100% 100% no-repeat;
+  mask: url("../assets/brewtime-device-mask.svg") center / 100% 100% no-repeat;
+}
 .brewtime-cover-recipe { position: absolute; left: 52.5%; top: 0; width: 37%; height: 67%; overflow: hidden; border-radius: 0 0 12px 12px; }
 .brewtime-cover-recipe img { position: absolute; display: block; width: 133.333%; max-width: none; height: auto; left: -12.292%; bottom: -12.4%; }
 .bocil-case.brewtime-case .brewtime-hero-media::before { background: #5e6831; }
@@ -98,11 +104,12 @@ html:has(body[data-route="brewtime"]) { background: #232323; }
 .brewtime-final { background: #232323; color: #fff; padding-bottom: clamp(48px, 5vw, 88px); }
 .brewtime-final .bocil-feature-intro h2 span,
 .brewtime-final .bocil-feature-intro > p { color: var(--body-on-dark); }
-.brewtime-final-showcase { position: relative; overflow: hidden; width: 100%; aspect-ratio: 2.43; margin-top: clamp(60px, 8vw, 128px); background: #5e6831; border-radius: 4px; }
-.brewtime-final-showcase img { position: absolute; display: block; width: 17.5%; height: auto; border-radius: clamp(12px, 1.4vw, 24px); }
-.brewtime-final-list { left: 19.6%; top: 37%; }
+.brewtime-final-showcase { position: relative; overflow: hidden; width: 100%; aspect-ratio: 2; margin-top: clamp(60px, 8vw, 128px); background: #232323; border-radius: 4px; }
+.brewtime-final-showcase::after { content: ""; position: absolute; z-index: -1; inset: 0; background: url("../assets/brewtime-final-background.png") center 65% / cover no-repeat; }
+.brewtime-final-showcase img { position: absolute; display: block; width: 21%; height: auto; border-radius: clamp(12px, 1.4vw, 24px); }
+.brewtime-final-list { left: 13.2%; top: 37%; }
 .brewtime-final-timer { left: 50%; top: 50%; transform: translate(-50%, -50%); }
-.brewtime-final-edit { position: absolute; z-index: 1; left: 63.2%; top: 0; width: 17.5%; height: 63%; overflow: hidden; border-radius: 0 0 clamp(12px, 1.4vw, 24px) clamp(12px, 1.4vw, 24px); }
+.brewtime-final-edit { position: absolute; z-index: 1; left: 65.8%; top: 0; width: 21%; height: 71%; overflow: hidden; border-radius: 0 0 clamp(12px, 1.4vw, 24px) clamp(12px, 1.4vw, 24px); }
 .brewtime-final-showcase .brewtime-final-edit img { position: absolute; width: 133.333%; max-width: none; height: auto; left: -12.292%; top: auto; bottom: -9.64%; border-radius: 0; }
 @media (max-width: 680px) {
   .brewtime-final-showcase { aspect-ratio: 1.4; }
@@ -129,3 +136,6 @@ html:has(body[data-route="brewtime"]) { background: #232323; }
   .brewtime-guided-copy p { margin-top: 28px; max-width: none; }
   .brewtime-timer-panel { height: clamp(400px, 110vw, 500px); padding: 24px; }
 }
+
+/* Extend the baked-in top corners above the final crop; retain bottom rounding. */
+.brewtime-final-showcase .brewtime-final-edit img { transform: scaleY(1.08); transform-origin: center bottom; border-radius: 0; }

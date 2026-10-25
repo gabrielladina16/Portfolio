@@ -10,6 +10,45 @@ export function initInteractions(currentRoute = "home") {
       video.playbackRate = rate;
     }
   });
+  document.querySelectorAll("video[data-controls-video]").forEach(video => {
+    video.muted = true;
+    video.defaultMuted = true;
+    const playVideo = () => video.play().catch(() => {});
+    video.addEventListener("canplay", playVideo, { signal: headerScrollController.signal });
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) playVideo();
+    }, { threshold: .1 });
+    observer.observe(video);
+    headerScrollController.signal.addEventListener("abort", () => observer.disconnect(), { once: true });
+    playVideo();
+  });
+  document.querySelectorAll("[data-header-head-cycle]").forEach(image => {
+    const signal = headerScrollController.signal;
+    // These export names describe the head side, rather than its gaze direction.
+    const poses = { left: image.dataset.headRight, middle: image.dataset.headMiddle, right: image.dataset.headLeft };
+    let currentPose = "middle";
+    const showPose = pose => {
+      if (currentPose === pose && image.getAttribute("src") === poses[pose]) return;
+      currentPose = pose;
+      image.src = poses[pose];
+    };
+    showPose("middle");
+    Object.values(poses).forEach(src => {
+      const preload = new Image();
+      preload.src = src;
+      preload.decode().catch(() => {});
+    });
+    window.addEventListener("pointermove", event => {
+      if (event.pointerType === "touch") return;
+      const rect = image.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      const monkeyX = rect.left + rect.width * .433;
+      const middleZone = rect.width * .055;
+      showPose(event.clientX < monkeyX - middleZone ? "left" : event.clientX > monkeyX + middleZone ? "right" : "middle");
+    }, { passive: true, signal });
+    document.documentElement.addEventListener("pointerleave", () => showPose("middle"), { signal });
+    window.addEventListener("blur", () => showPose("middle"), { signal });
+  });
   const header = document.querySelector("[data-header]");
   const menuButton = document.querySelector(".menu-button");
   const nav = document.querySelector(".main-nav");
@@ -31,7 +70,7 @@ export function initInteractions(currentRoute = "home") {
     });
   };
 
-  const activeRoute = ["bocil", "typelab", "brewtime", "sustainopia"].includes(currentRoute) ? "work" : currentRoute;
+  const activeRoute = ["bocil", "typelab", "brewtime", "sustainopia", "higher-hopes"].includes(currentRoute) ? "work" : currentRoute;
   setActiveLink(navLinks.find((link) => link.dataset.route === activeRoute));
 
   navLinks.forEach((link) => link.addEventListener("click", () => {
@@ -350,6 +389,59 @@ export function initInteractions(currentRoute = "home") {
     };
     frame = requestAnimationFrame(tick);
     gallerySignal.addEventListener("abort", () => cancelAnimationFrame(frame), { once: true });
+  });
+
+  document.querySelectorAll("[data-scene-pan]").forEach(viewport => {
+    const track = viewport.querySelector(".high-hopes-scene-track");
+    const image = track.firstElementChild;
+    const speed = 120; // Same pixels per second as Sustainopia's final render row.
+    let offset;
+    let direction = -1;
+    let bottomHoldRemaining = 1;
+    let lastTime;
+    let frame;
+    let range = 0;
+    const measureScene = () => {
+      range = Math.max(0, image.getBoundingClientRect().height - viewport.getBoundingClientRect().height - .5);
+    };
+    const sceneResize = new ResizeObserver(measureScene);
+    sceneResize.observe(viewport);
+    sceneResize.observe(image);
+    const tick = time => {
+      const delta = lastTime === undefined ? 0 : Math.min((time - lastTime) / 1000, .05);
+      lastTime = time;
+      if (image.complete && image.naturalHeight > 0) {
+        // Begin at the bottom of the scene, pan to the top, then return.
+        if (offset === undefined) {
+          offset = range;
+          bottomHoldRemaining = 1;
+        } else {
+          offset = Math.min(offset, range);
+        }
+        if (!document.hidden && !reducedMotion && range > 0) {
+          const movingDelta = Math.max(0, delta - bottomHoldRemaining);
+          bottomHoldRemaining = Math.max(0, bottomHoldRemaining - delta);
+          offset += direction * movingDelta * speed;
+          if (offset <= 0) { offset = 0; direction = 1; }
+          if (offset >= range && direction === 1) {
+            offset = range;
+            direction = -1;
+            bottomHoldRemaining = 1;
+          }
+        }
+        track.style.transform = `translate3d(0, ${-offset}px, 0)`;
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    image.decode().then(() => {
+      if (gallerySignal.aborted) return;
+      measureScene();
+      frame = requestAnimationFrame(tick);
+    }).catch(() => {});
+    gallerySignal.addEventListener("abort", () => {
+      cancelAnimationFrame(frame);
+      sceneResize.disconnect();
+    }, { once: true });
   });
 
   const lightbox = document.querySelector(".sustainopia-lightbox");

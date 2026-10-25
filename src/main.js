@@ -1,6 +1,7 @@
 import "./styles/main.css";
 import { Header } from "./components/Header.js";
 import { Work } from "./components/Work.js";
+import { HighHopesCaseStudy } from "./components/HighHopesCaseStudy.js";
 import { BocilCaseStudy } from "./components/BocilCaseStudy.js";
 import { BrewTimeCaseStudy } from "./components/BrewTimeCaseStudy.js";
 import { TypeLabCaseStudy } from "./components/TypeLabCaseStudy.js";
@@ -12,6 +13,7 @@ import { initInteractions } from "./utils/interactions.js";
 const pages = {
   work: () => Work(),
   bocil: () => BocilCaseStudy(),
+  "higher-hopes": () => HighHopesCaseStudy(),
   typelab: () => TypeLabCaseStudy(),
   brewtime: () => BrewTimeCaseStudy(),
   sustainopia: () => SustainopiaCaseStudy(),
@@ -20,7 +22,7 @@ const pages = {
 };
 
 function getRoute() {
-  return ({ "#/work/bocil": "bocil", "#/work/typelab": "typelab", "#/work/brewtime": "brewtime", "#/work/sustainopia": "sustainopia", "#/playground": "playground", "#/about": "about" })[location.hash] || "work";
+  return ({ "#/work/higher-hopes": "higher-hopes", "#/work/high-hopes": "higher-hopes", "#/work/bocil": "bocil", "#/work/typelab": "typelab", "#/work/brewtime": "brewtime", "#/work/sustainopia": "sustainopia", "#/playground": "playground", "#/about": "about" })[location.hash] || "work";
 }
 
 function renderPage() {
