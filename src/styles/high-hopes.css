@@ -105,7 +105,7 @@
 
 .high-hopes-scene-window { overflow-x: hidden; overflow-y: hidden; scroll-behavior: auto; scrollbar-width: none; position: relative; background: #57432b; }
 .high-hopes-scene-window::-webkit-scrollbar { display: none; }
-.high-hopes-scene-track { width: 100%; }
+.high-hopes-scene-track { width: 100%; transform: translate3d(0, var(--scene-offset, 0px), 0); will-change: transform; }
 .high-hopes-scene-track img { display: block; width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .high-hopes-scene-track { will-change: auto; }

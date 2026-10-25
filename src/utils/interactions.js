@@ -402,7 +402,7 @@ export function initInteractions(currentRoute = "home") {
     let frame;
     let range = 0;
     const measureScene = () => {
-      range = Math.max(0, viewport.scrollHeight - viewport.clientHeight);
+      range = Math.max(0, image.getBoundingClientRect().height - viewport.clientHeight);
     };
     const sceneResize = new ResizeObserver(measureScene);
     sceneResize.observe(viewport);
@@ -418,7 +418,7 @@ export function initInteractions(currentRoute = "home") {
         } else {
           offset = Math.min(offset, range);
         }
-        if (!document.hidden && !reducedMotion && range > 0) {
+        if (!document.hidden && range > 0) {
           const movingDelta = Math.max(0, delta - bottomHoldRemaining);
           bottomHoldRemaining = Math.max(0, bottomHoldRemaining - delta);
           offset += direction * movingDelta * speed;
@@ -429,7 +429,7 @@ export function initInteractions(currentRoute = "home") {
             bottomHoldRemaining = 1;
           }
         }
-        viewport.scrollTop = offset;
+        track.style.setProperty("--scene-offset", `${-offset}px`);
       }
       frame = requestAnimationFrame(tick);
     };
