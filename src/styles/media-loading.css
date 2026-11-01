@@ -19,3 +19,42 @@ video[data-media-state="error"] {
   img[data-media-state="loading"],
   video[data-media-state="loading"] { animation: none; }
 }
+
+/* Reserve a real box even before an img has a source/intrinsic dimensions. */
+img[data-media-state="loading"],
+video[data-media-state="loading"],
+img[data-media-state="error"],
+video[data-media-state="error"] {
+  aspect-ratio: var(--media-aspect-ratio, auto);
+}
+
+/* Screenshot annotations depend on the image geometry. Reveal the whole
+   composition together instead of showing floating labels during loading. */
+[data-media-group] { position: relative; }
+[data-media-group-state="loading"] > *,
+[data-media-group-state="error"] > * { visibility: hidden; }
+[data-media-group-state="loading"]::after,
+[data-media-group-state="error"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: #e3e2dd linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .45) 45%, transparent 70%);
+  background-size: 240% 100%;
+  animation: media-skeleton-shimmer 1.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-media-group-state="loading"]::after { animation: none; }
+}
+
+[data-media-group-state="error"]::after {
+  content: "Image unavailable. Please refresh to try again.";
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: var(--muted);
+  background-image: none;
+  animation: none;
+  text-align: center;
+}

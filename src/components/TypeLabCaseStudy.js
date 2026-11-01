@@ -65,7 +65,7 @@ export function TypeLabCaseStudy() {
         <div class="typelab-system-diagrams">
           <h3 class="typelab-system-label bocil-shell">01/System Preview</h3>
           <div class="typelab-system-panel">
-          <div class="typelab-system-diagram">
+          <div class="typelab-system-diagram" data-media-group>
             <div class="typelab-system-callout typelab-system-callout--left">
               <div class="typelab-system-callout-copy"><h3>Type Hierarchy</h3>
               <p>Inspired by Apple’s semantic text styles and typography scale principles, I introduced predefined roles to help users build a consistent hierarchy without styling every text element from scratch.</p></div>
@@ -80,7 +80,7 @@ export function TypeLabCaseStudy() {
           </div>
           <h3 class="typelab-system-label bocil-shell">02/System Compare</h3>
           <div class="typelab-system-panel">
-          <div class="typelab-system-diagram typelab-system-diagram--compare">
+          <div class="typelab-system-diagram typelab-system-diagram--compare" data-media-group>
             <div class="typelab-system-callout typelab-system-callout--left">
               <div class="typelab-system-callout-copy"><h3>Typeface Comparison</h3>
               <p>Compare two typefaces side by side to evaluate hierarchy, readability, and visual consistency.</p></div>

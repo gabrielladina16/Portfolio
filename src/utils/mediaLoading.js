@@ -21,6 +21,7 @@ export function prepareMedia(markup) {
       media.setAttribute("width", size.width);
       media.setAttribute("height", size.height);
     }
+    if (size) media.style.setProperty("--media-aspect-ratio", `${size.width} / ${size.height}`);
     media.dataset.mediaState = "loading";
     media.setAttribute("aria-busy", "true");
     if (media.hasAttribute("src")) {
@@ -41,6 +42,10 @@ export function prepareMedia(markup) {
       media.loading = "eager"; // The observer controls when the source is assigned.
     }
   });
+  template.content.querySelectorAll("[data-media-group]").forEach(group => {
+    group.dataset.mediaGroupState = "loading";
+    group.setAttribute("aria-busy", "true");
+  });
   return template.content;
 }
 
@@ -48,14 +53,23 @@ export function initMediaLoading(root) {
   dispose?.();
   const controller = new AbortController();
   const { signal } = controller;
+  const loaders = new Set();
+  const updateGroup = media => {
+    const group = media.closest("[data-media-group]");
+    if (!group || group.querySelector('[data-media-state="loading"]')) return;
+    group.dataset.mediaGroupState = group.querySelector('[data-media-state="error"]') ? "error" : "ready";
+    group.removeAttribute("aria-busy");
+  };
   const ready = media => {
     media.dataset.mediaState = "ready";
     media.removeAttribute("aria-busy");
+    updateGroup(media);
   };
   const failed = media => {
     if (media.dataset.mediaSrc) return;
     media.dataset.mediaState = "error";
     media.removeAttribute("aria-busy");
+    updateGroup(media);
     // Keep the poster or native alt text instead of an endless skeleton.
   };
   const isVisible = media => {
@@ -70,6 +84,25 @@ export function initMediaLoading(root) {
   const playbackObserver = new IntersectionObserver(entries => {
     entries.forEach(({ target }) => syncPlayback(target));
   });
+  const loadImage = media => {
+    const src = media.getAttribute("src") || media.dataset.mediaSrc;
+    const loader = new Image();
+    loaders.add(loader);
+    loader.decoding = "async";
+    loader.fetchPriority = media.fetchPriority;
+    loader.addEventListener("load", async () => {
+      try { await loader.decode(); } catch { /* load succeeded; native drawing remains available. */ }
+      loaders.delete(loader);
+      if (!signal.aborted && loader.naturalWidth > 0) media.src = src;
+    }, { once: true, signal });
+    loader.addEventListener("error", () => {
+      loaders.delete(loader);
+      if (!signal.aborted) failed(media);
+    }, { once: true, signal });
+    // Decode offscreen before exposing the source: progressive image bytes must
+    // never replace the skeleton with an incomplete or collapsed image.
+    loader.src = src;
+  };
   const observer = new IntersectionObserver(entries => {
     entries.forEach(({ target: media, isIntersecting }) => {
       if (!isIntersecting) return;
@@ -80,7 +113,7 @@ export function initMediaLoading(root) {
         if (media.dataset.mediaSrc) media.src = media.dataset.mediaSrc;
         media.load();
       } else {
-        media.src = media.getAttribute("src") || media.dataset.mediaSrc;
+        loadImage(media);
       }
       delete media.dataset.mediaSrc;
     });
@@ -108,6 +141,8 @@ export function initMediaLoading(root) {
     controller.abort();
     observer.disconnect();
     playbackObserver.disconnect();
+    loaders.forEach(loader => loader.removeAttribute("src"));
+    loaders.clear();
     root.querySelectorAll("video").forEach(video => {
       video.pause();
       video.removeAttribute("src");
