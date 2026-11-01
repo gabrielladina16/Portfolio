@@ -1,0 +1,106 @@
+/* Inherit Bocil's type system, shell, media grain, and section frames. */
+.project-card[data-project="grab"] .project-visual { background: #00321C; }
+.grab-cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  perspective: 1000px;
+}
+.grab-cover-card {
+  position: relative;
+  width: 62%;
+  aspect-ratio: 2022 / 1276;
+  transform-style: preserve-3d;
+  transition: transform .75s cubic-bezier(.22,.65,.3,1);
+}
+.grab-cover-face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.grab-cover-back { transform: rotateY(180deg); }
+@media (hover: hover) and (pointer: fine) {
+  .project-card[data-project="grab"]:hover .grab-cover-card { transform: rotateY(180deg); }
+}
+.project-card[data-project="grab"]:focus-within .grab-cover-card { transform: rotateY(180deg); }
+@media (prefers-reduced-motion: reduce) {
+  .grab-cover-card { transition: none; }
+}
+
+.page-grab { background: #f4f4f2; }
+.grab-case .bocil-context > p { max-width: none; }
+.grab-case.bocil-case .grab-hero-media::before { background: #00321C; }
+.grab-case .grab-hero-media { display: grid; place-items: center; }
+.grab-header-cards {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, calc(100% - 96px));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 36px);
+}
+.grab-header-card { perspective: 1000px; outline-offset: 8px; border-radius: 10px; }
+.grab-header-card .grab-cover-card { width: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .grab-header-card:hover .grab-cover-card { transform: rotateY(180deg); }
+}
+.grab-header-card:focus .grab-cover-card { transform: rotateY(180deg); }
+.grab-case .grab-work { padding-bottom: 100px; }
+.grab-work .bocil-feature-intro h2 span,
+.grab-work-group .typelab-system-label { color: #b7b7b7; }
+.grab-work-groups { margin-top: clamp(48px, 5vw, 80px); }
+.grab-work-group + .grab-work-group { margin-top: 72px; }
+.grab-work-surface {
+  position: relative;
+  isolation: isolate;
+  background: #101010;
+  padding-block: 48px;
+}
+/* One fine-grain layer sits above both the dark surface and the artwork. */
+.grab-work-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: url("../assets/textureee.png") center / 1400px auto repeat;
+  opacity: .12;
+  pointer-events: none;
+}
+.grab-work-layout {
+  display: grid;
+  grid-template-columns: .75fr 1.25fr;
+  gap: 100px;
+  align-items: start;
+}
+.grab-work-layout > p {
+  margin: 0;
+  color: var(--body-on-dark);
+  font: 500 var(--description-size)/var(--description-leading) var(--sans);
+}
+.grab-work-layout img { display: block; width: 100%; height: auto; min-width: 0; }
+.grab-posters { display: grid; grid-template-columns: .5625fr .808376575fr; gap: 24px; align-items: start; }
+.grab-comms { display: grid; grid-template-columns: 1fr 1fr 1.06fr; gap: 18px; align-items: start; }
+.grab-comms-messages { display: grid; gap: 18px; }
+.grab-cards { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px 18px; max-width: 520px; }
+@media (min-width: 1248px) {
+  .grab-work-layout { grid-template-columns: 420px 600px; gap: 100px; }
+}
+@media (min-width: 681px) and (max-width: 900px) {
+  .grab-work-layout { gap: 50px; }
+}
+@media (max-width: 680px) {
+  .grab-header-cards { width: calc(100% - 32px); gap: 8px; }
+  .grab-work-layout { grid-template-columns: 1fr; gap: 32px; }
+  .grab-work-surface { padding-block: 28px; }
+  .grab-work-group + .grab-work-group { margin-top: 48px; }
+  .grab-posters { gap: 14px; }
+  .grab-comms { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grab-comms-messages { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grab-cards { gap: 14px; }
+  .grab-case .grab-work { padding-bottom: 68px; }
+}

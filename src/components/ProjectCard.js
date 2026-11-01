@@ -7,8 +7,11 @@ import sustainopiaImage from "../assets/sustainopia-cover.png";
 import brewtimeTimer from "../assets/brewtime-timer.png";
 import brewtimeHomeVideo from "../assets/brewtime-home-timer.mp4";
 import brewtimeRecipeBottom from "../assets/brewtime-recipe-bottom-reference.png";
+import grabCardFront from "../assets/grab-card-1.png";
+import grabCardBack from "../assets/grab-card-2.png";
 
 export function ProjectCover(project) {
+  if (project.id === "grab") return `<div class="grab-cover"><div class="grab-cover-card"><img class="grab-cover-face grab-cover-front" src="${grabCardFront}" alt="GrabMerchant e-money card featuring a merchant handing an order to a delivery driver" /><img class="grab-cover-face grab-cover-back" src="${grabCardBack}" alt="" aria-hidden="true" /></div></div>`;
   if (project.id === "higher-hopes") return `<div class="high-hopes-home-cover"><img class="high-hopes-cover-default" src="${highHopesScene}" alt="High Hopes monkey at the foot of a cliff during a forest fire" /><img class="high-hopes-cover-hover" src="${highHopesHover}" alt="" aria-hidden="true" /></div>`;
   if (project.id === "brewtime") return `<div class="brewtime-cover"><div class="brewtime-cover-timer"><video autoplay muted loop playsinline preload="metadata" poster="${brewtimeTimer}" aria-label="BrewTime guided brewing timer demonstration"><source src="${brewtimeHomeVideo}" type="video/mp4" /></video></div><div class="brewtime-cover-recipe"><img src="${brewtimeRecipeBottom}" alt="BrewTime recipe steps and editing controls" /></div></div>`;
   if (project.id === "sustainopia") return `<img class="project-cover-photo" src="${sustainopiaImage}" alt="Sustainopia architectural rendering of landscaped circular public spaces" />`;
@@ -16,7 +19,7 @@ export function ProjectCover(project) {
 }
 
 export function ProjectCard(project, index) {
-  const projectHref = ["bocil", "typelab", "brewtime", "sustainopia", "higher-hopes"].includes(project.id) ? `#/work/${project.id}` : "#/work";
+  const projectHref = ["bocil", "typelab", "brewtime", "sustainopia", "higher-hopes", "grab"].includes(project.id) ? `#/work/${project.id}` : "#/work";
   return `
     <article class="project-card reveal" data-project="${project.id}" style="--delay:${index * 70}ms">
       <a href="${projectHref}" aria-label="View ${project.title} project">

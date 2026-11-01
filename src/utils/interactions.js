@@ -10,18 +10,6 @@ export function initInteractions(currentRoute = "home") {
       video.playbackRate = rate;
     }
   });
-  document.querySelectorAll("video[data-controls-video]").forEach(video => {
-    video.muted = true;
-    video.defaultMuted = true;
-    const playVideo = () => video.play().catch(() => {});
-    video.addEventListener("canplay", playVideo, { signal: headerScrollController.signal });
-    const observer = new IntersectionObserver(entries => {
-      if (entries.some(entry => entry.isIntersecting)) playVideo();
-    }, { threshold: .1 });
-    observer.observe(video);
-    headerScrollController.signal.addEventListener("abort", () => observer.disconnect(), { once: true });
-    playVideo();
-  });
   document.querySelectorAll("[data-header-head-cycle]").forEach(image => {
     const signal = headerScrollController.signal;
     // These export names describe the head side, rather than its gaze direction.
@@ -70,7 +58,7 @@ export function initInteractions(currentRoute = "home") {
     });
   };
 
-  const activeRoute = ["bocil", "typelab", "brewtime", "sustainopia", "higher-hopes"].includes(currentRoute) ? "work" : currentRoute;
+  const activeRoute = ["bocil", "typelab", "brewtime", "sustainopia", "higher-hopes", "grab"].includes(currentRoute) ? "work" : currentRoute;
   setActiveLink(navLinks.find((link) => link.dataset.route === activeRoute));
 
   navLinks.forEach((link) => link.addEventListener("click", () => {

@@ -1,0 +1,21 @@
+/* The skeleton uses the media's own box, preserving existing layered layouts. */
+img[data-media-state="loading"],
+video[data-media-state="loading"] {
+  background-color: #e3e2dd;
+  background-image: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .45) 45%, transparent 70%);
+  background-size: 240% 100%;
+  animation: media-skeleton-shimmer 1.6s ease-in-out infinite;
+  color: transparent;
+}
+img[data-media-state="error"],
+video[data-media-state="error"] {
+  background-color: #e3e2dd;
+}
+@keyframes media-skeleton-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  img[data-media-state="loading"],
+  video[data-media-state="loading"] { animation: none; }
+}
