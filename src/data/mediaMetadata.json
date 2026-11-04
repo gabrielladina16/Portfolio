@@ -612,5 +612,33 @@
   "typelab-system-preview.png": {
     "width": 2752,
     "height": 2064
+  },
+  "previews/high-hopes-homepage-left.webp": {
+    "width": 1280,
+    "height": 900
+  },
+  "previews/high-hopes-homepage-right.webp": {
+    "width": 1280,
+    "height": 900
+  },
+  "previews/sustainopia-cover.webp": {
+    "width": 1280,
+    "height": 719
+  },
+  "previews/grab-card-1.webp": {
+    "width": 1280,
+    "height": 808
+  },
+  "previews/grab-card-2.webp": {
+    "width": 1280,
+    "height": 808
+  },
+  "previews/brewtime-recipe-bottom-reference.webp": {
+    "width": 640,
+    "height": 976
+  },
+  "previews/brewtime-final-wallpaper.webp": {
+    "width": 1280,
+    "height": 1280
   }
 }

@@ -1,5 +1,6 @@
 import { projects } from "../data/projects.js";
 import { ProjectCard } from "./ProjectCard.js";
+import { CaseStudyFooter } from "./CaseStudyFooter.js";
 
 export function Work() {
   return `
@@ -11,5 +12,6 @@ export function Work() {
       <div class="project-grid">
         ${projects.map(ProjectCard).join("")}
       </div>
-    </section>`;
+    </section>
+    ${CaseStudyFooter()}`;
 }

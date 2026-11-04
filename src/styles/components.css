@@ -96,6 +96,82 @@
   .project-explorer h2 { font-size: 24px; margin-bottom: 32px; }
 }
 .project-visual::before, .panel-surface::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: url("../assets/textureee.png") center / cover; opacity: .24; mix-blend-mode: multiply; }
+
+/* Covers act as windows onto the same fixed, viewport-aligned texture.
+   CSS clips it at the cover edges; no scroll-time mask regeneration. */
+.page-work .project-visual { isolation: isolate; }
+.page-work .project-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("../assets/textureee.png") center / 1800px auto repeat fixed;
+  mix-blend-mode: multiply;
+}
+.page-work .project-visual::before { z-index: 0; opacity: .16; }
+.page-work .project-card:is([data-project="adapenyu"], [data-project="brewtime"], [data-project="grab"]) .project-visual::before {
+  opacity: .58;
+  filter: contrast(2.2);
+}
+.page-work .project-visual > * { z-index: 1; }
+/* Keep app screenshots and photos free of the page-wide grain overlay. */
+.page-work ~ .texture { opacity: 0; }
+/* Fine, faint viewport-aligned grain only over device and app previews. */
+.project-app-preview > .project-app-media { display: block; width: 100%; height: auto; border-radius: inherit; }
+.page-work .placeholder-window { position: relative; }
+.page-work :is(.project-app-preview, .placeholder-window, .brewtime-cover-timer, .brewtime-cover-recipe, .grab-cover-card, .high-hopes-home-cover, .project-photo-preview)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: inherit;
+  background: url("../assets/textureee.png") center / 1100px auto repeat fixed;
+  opacity: .08;
+  mix-blend-mode: multiply;
+}
+.project-photo-preview { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
+.page-work .brewtime-cover-timer::after {
+  -webkit-mask: url("../assets/brewtime-device-mask.svg") center / 100% 100% no-repeat;
+  mask: url("../assets/brewtime-device-mask.svg") center / 100% 100% no-repeat;
+}
+
+.page-work .project-card[data-project="bocil"] [data-bocil-preview-motion] {
+  width: 80%;
+  left: 10%;
+  top: 50%;
+  transform-origin: center;
+  transform: translate(var(--bocil-camera-x, 0%), calc(-50% + var(--bocil-camera-y, 0%))) scale(var(--bocil-camera-zoom, 1));
+  transition: none;
+  aspect-ratio: 2218 / 1392;
+}
+.bocil-motion-frame { display: none; }
+.page-work .project-visual.has-motion-frame > .bocil-motion-frame {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  transform: none;
+}
+.page-work .project-visual.has-motion-frame > [data-bocil-preview-motion] { z-index: 3; }
+.has-motion-frame [data-bocil-preview-motion] > video { opacity: 0; }
+.page-work .project-card[data-project="typelab"] .project-app-preview {
+  aspect-ratio: 1920 / 1392;
+  overflow: hidden;
+  border: 0;
+  outline: 0;
+}
+.page-work .project-card[data-project="typelab"] .project-app-media {
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.006);
+  border: 0;
+  outline: 0;
+}
 .project-label, .placeholder-tag { position: absolute; z-index: 3; top: 18px; left: 18px; padding: 8px 11px; border-radius: 999px; background: rgba(255,255,255,.78); backdrop-filter: blur(10px); font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 
 @media (hover: hover) and (pointer: fine) {
@@ -133,6 +209,11 @@
 .page-work .project-visual { aspect-ratio: 1.42; border-radius: 10px; }
 .page-work .placeholder-ui { padding: 8% 9% 0; }
 .page-work .placeholder-window { height: 90%; }
+.page-work .placeholder-window { border-bottom: 0; }
+/* Trim the subpixel seam where app previews meet the bottom of the cover. */
+.page-work .project-card:is([data-project="adapenyu"], [data-project="typelab"]) .project-visual {
+  clip-path: inset(0 0 1px 0 round 10px);
+}
 .page-work .placeholder-tag { bottom: 12px; left: 12px; padding: 6px 9px; font-size: 8px; }
 .page-work .project-info { display: block; padding: 18px 3px 0; }
 .page-work .project-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }

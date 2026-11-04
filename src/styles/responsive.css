@@ -26,7 +26,7 @@
 }
 
 @media (max-width: 680px) {
-  :root { --shell: calc(100vw - 28px); --radius: 13px; }
+  :root { --shell: calc(100vw - 28px); --work-shell: calc(100vw - 28px); --radius: 13px; }
   .texture {
     background-size: 175% auto;
     background-position: center top;
@@ -66,7 +66,7 @@
   .hero-aside > p { font-size: 15px; max-width: 90%; }
   .page-work .work, .page-playground .playground, .page-about .about { padding-top: 125px; }
   .work { padding: 90px 0 105px; }
-  .page-work .work { width: calc(100vw - 28px); }
+  .page-work .work { width: var(--work-shell); }
   .page-work .work-intro { min-height: 0; margin: 0 0 48px; padding-top: 10px; }
   .page-work .work-intro h1 { margin: 0 0 22px; font-size: clamp(29px,8.55vw,39px); }
   .page-work .work-lead { max-width: 100%; font-size: 13px; }

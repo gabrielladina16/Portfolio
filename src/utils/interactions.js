@@ -1,8 +1,11 @@
+import { initBocilPreviewMotion } from "./bocilPreviewMotion.js";
+
 let headerScrollController;
 
 export function initInteractions(currentRoute = "home") {
   headerScrollController?.abort();
   headerScrollController = new AbortController();
+  initBocilPreviewMotion(headerScrollController.signal);
   document.querySelectorAll("video[data-playback-rate]").forEach((video) => {
     const rate = Number(video.dataset.playbackRate);
     if (Number.isFinite(rate) && rate > 0) {
@@ -272,48 +275,68 @@ export function initInteractions(currentRoute = "home") {
       context.setTransform(scale, 0, 0, scale, 0, 0);
     };
 
-    const paintPencilTrail = () => {
+    const trailDuration = 480;
+    const paintPencilTrail = (now) => {
       context.clearRect(0, 0, window.innerWidth, window.innerHeight);
       context.lineCap = "round";
       context.lineJoin = "round";
+      while (points.length && now - points[0].born >= trailDuration) points.shift();
 
+      // Midpoint curves share endpoints and tangents, keeping turns continuous.
       for (let index = 1; index < points.length; index += 1) {
         const previous = points[index - 1];
         const point = points[index];
-        const strength = Math.min(previous.life, point.life);
+        const next = points[index + 1];
+        const start = index === 1 ? previous : {
+          x: (previous.x + point.x) / 2,
+          y: (previous.y + point.y) / 2,
+        };
+        const end = next ? {
+          x: (point.x + next.x) / 2,
+          y: (point.y + next.y) / 2,
+        } : point;
+        const strength = Math.max(0, 1 - (now - previous.born) / trailDuration);
         context.strokeStyle = `rgba(255,255,255,${strength * .7})`;
         context.lineWidth = .72 + strength * .38;
         context.beginPath();
-        context.moveTo(previous.x, previous.y);
-        context.lineTo(point.x, point.y);
+        context.moveTo(start.x, start.y);
+        context.quadraticCurveTo(point.x, point.y, end.x, end.y);
         context.stroke();
 
         context.strokeStyle = `rgba(255,255,255,${strength * .22})`;
         context.lineWidth = .45;
         context.beginPath();
-        context.moveTo(previous.x + previous.offset, previous.y - previous.offset);
-        context.lineTo(point.x + point.offset, point.y - point.offset);
+        context.moveTo(start.x + .5, start.y - .5);
+        context.quadraticCurveTo(point.x + .5, point.y - .5, end.x + .5, end.y - .5);
         context.stroke();
       }
 
-      points.forEach((point) => { point.life -= .035; });
-      while (points[0]?.life <= 0) points.shift();
       if (points.length) trailFrame = requestAnimationFrame(paintPencilTrail);
       else trailFrame = undefined;
     };
 
     document.addEventListener("pointermove", (event) => {
-      const previous = points.at(-1);
-      if (previous && Math.hypot(event.clientX - previous.x, event.clientY - previous.y) < 2.5) return;
-      points.push({
-        x: event.clientX,
-        y: event.clientY,
-        life: 1,
-        offset: (Math.random() - .5) * 1.5,
-      });
-      if (points.length > 42) points.shift();
-      if (!trailFrame) trailFrame = requestAnimationFrame(paintPencilTrail);
+      if (event.pointerType === "touch") return;
+      const samples = event.getCoalescedEvents?.();
+      const born = performance.now();
+      for (const sample of samples?.length ? samples : [event]) {
+        const previous = points.at(-1);
+        if (previous && Math.hypot(sample.clientX - previous.x, sample.clientY - previous.y) < .5) continue;
+        points.push({ x: sample.clientX, y: sample.clientY, born });
+      }
+      // Bound work even on devices delivering very high frequency input.
+      if (points.length > 512) points.splice(0, points.length - 512);
+      if (points.length && !trailFrame) trailFrame = requestAnimationFrame(paintPencilTrail);
     }, { passive: true, signal: controller.signal });
+    const clearTrail = () => {
+      cancelAnimationFrame(trailFrame);
+      trailFrame = undefined;
+      points.length = 0;
+      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    };
+    controller.signal.addEventListener("abort", clearTrail, { once: true });
+    document.documentElement.addEventListener("pointerleave", clearTrail, { signal: controller.signal });
+    window.addEventListener("blur", clearTrail, { signal: controller.signal });
     window.addEventListener("resize", sizeTrail, { passive: true, signal: controller.signal });
     sizeTrail();
   }

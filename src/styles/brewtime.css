@@ -2,7 +2,9 @@
 body[data-route="brewtime"] { background: #232323; }
 html:has(body[data-route="brewtime"]) { background: #232323; }
 .project-visual:has(.brewtime-cover) { background: #232323; isolation: isolate; }
-.project-visual:has(.brewtime-cover)::after { content: ""; position: absolute; z-index: -1; inset: 0; background: url("../assets/brewtime-final-wallpaper.jpg") center / cover no-repeat; filter: grayscale(1) brightness(1.25); }
+.project-visual:has(.brewtime-cover)::after { content: ""; position: absolute; z-index: -1; inset: 0; background: url("../assets/previews/brewtime-final-wallpaper.webp") center / cover no-repeat; filter: grayscale(1) brightness(1.25); }
+.page-work .project-card[data-project="brewtime"] .project-visual { background: #2D381F; }
+.page-work .project-card[data-project="brewtime"] .project-visual::after { content: none; }
 .brewtime-cover { position: absolute; z-index: 1; inset: 0; transition: transform .55s cubic-bezier(.2,.75,.25,1); }
 .project-card:hover .brewtime-cover,
 .project-card:focus-within .brewtime-cover { transform: scale(1.035); }
@@ -138,4 +140,10 @@ html:has(body[data-route="brewtime"]) { background: #232323; }
 }
 
 /* Extend the baked-in top corners above the final crop; retain bottom rounding. */
-.brewtime-final-showcase .brewtime-final-edit img { transform: scaleY(1.08); transform-origin: center bottom; border-radius: 0; }
+.brewtime-final-showcase .brewtime-final-edit img {
+  transform: scaleY(1.08);
+  transform-origin: center bottom;
+  border-radius: 0;
+  -webkit-mask: url("../assets/brewtime-recipe-bottom-mask.svg") center / 100% 100% no-repeat;
+  mask: url("../assets/brewtime-recipe-bottom-mask.svg") center / 100% 100% no-repeat;
+}

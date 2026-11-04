@@ -107,11 +107,11 @@
 .sustainopia-render-group { display: flex; gap: 28px; padding-right: 28px; flex-shrink: 0; }
 .sustainopia-render-group figure { width: min(47vw, 820px); margin: 0; flex-shrink: 0; }
 .sustainopia-render-group button { width: 100%; }
-.sustainopia-render-group img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; }
+.sustainopia-render-group .sustainopia-zoom-trigger img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; }
 .sustainopia-render-group figcaption { margin-top: 16px; font: 500 var(--description-size)/1.5 var(--sans); }
 .sustainopia-render-track:has(button:hover), .sustainopia-render-window:focus-within .sustainopia-render-track, body.sustainopia-modal-open .sustainopia-render-track { animation-play-state: paused; }
 .sustainopia-ending { position: relative; width: min(1600px, calc(100% - 80px)); margin: clamp(80px, 8vw, 140px) auto 0; padding-bottom: 60px; }
-.sustainopia-ending-photo { display: block; width: 100%; aspect-ratio: 1.86; object-fit: cover; object-position: center 57%; border-radius: 10px; }
+.sustainopia-ending .sustainopia-ending-photo { display: block; width: 100%; height: auto; aspect-ratio: 1.86; object-fit: cover; object-position: center 57%; border-radius: 10px; }
 .sustainopia-ending-title { position: absolute; top: 4%; right: 1.5%; width: 48%; height: auto; }
 .sustainopia-lightbox { width: 96vw; max-width: 1800px; height: 94svh; max-height: 94svh; padding: 52px 20px 16px; border: 0; border-radius: 12px; background: #fff; color: #111; }
 .sustainopia-lightbox::backdrop { background: rgba(0,0,0,.85); }

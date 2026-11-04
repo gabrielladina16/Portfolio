@@ -58,3 +58,35 @@ video[data-media-state="error"] {
   animation: none;
   text-align: center;
 }
+
+/* A decoded poster is real content, not a skeleton waiting for the MP4. */
+video[data-media-poster-ready="true"] {
+  background: transparent;
+  animation: none;
+}
+img[data-media-state="ready"] { animation: media-content-reveal .24s ease-out; }
+@keyframes media-content-reveal {
+  from { opacity: .6; }
+  to { opacity: 1; }
+}
+.media-retry {
+  position: absolute;
+  z-index: 20;
+  right: 12px;
+  bottom: 12px;
+  max-width: calc(100% - 24px);
+  padding: 8px 12px;
+  border: 1px solid rgba(127,127,123,.25);
+  border-radius: 999px;
+  background: #f0efe9;
+  color: #11110f;
+  font: 600 12px/1.3 var(--sans);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+.media-retry:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+[data-media-group-state] > .media-retry { visibility: visible; }
+[data-media-group-state="error"]::after { content: "Preview unavailable"; animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  img[data-media-state="ready"] { animation: none; }
+}
