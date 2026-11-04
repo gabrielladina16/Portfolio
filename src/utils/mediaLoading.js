@@ -56,8 +56,12 @@ export function initMediaLoading(root) {
   const records = new Map();
   const buttons = new Map();
   const cancellations = new Set();
-  const connection = navigator.connection;
-  const conserveData = connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '');
+  const retryTimers = new Set();
+  const retryLater = (action, delay) => {
+    const timer = setTimeout(() => { retryTimers.delete(timer); if (!signal.aborted) action(); }, delay);
+    retryTimers.add(timer);
+    return timer;
+  };
   const visible = media => {
     const rect = media.getBoundingClientRect();
     return !document.hidden && rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
@@ -133,8 +137,23 @@ export function initMediaLoading(root) {
   });
   const failed = media => {
     if (signal.aborted) return;
-    records.get(media).failed = true;
-    state(media, 'error');
+    const record = records.get(media);
+    if (record.failed) return;
+    record.failed = true;
+    state(media, media.dataset.mediaPosterReady ? 'poster' : 'error');
+    if (record.video) {
+      removeButton(media);
+      record.started = false;
+      const attempt = record.loadRetries || 0;
+      if (attempt < 3) {
+        record.loadRetries = attempt + 1;
+        retryLater(() => {
+          record.failed = false;
+          if (record.near) requestVideo(media);
+        }, 1500 * 2 ** attempt);
+      }
+      return;
+    }
     actionButton(media, 'Try again', () => {
       const group = media.closest('[data-media-group]');
       records.forEach((record, item) => {
@@ -149,13 +168,25 @@ export function initMediaLoading(root) {
   const syncPlayback = () => {
     const candidates = [...records].filter(([media, record]) => record.video && record.started && !record.failed && visible(media) && media.readyState >= 2 && media.dataset.mediaAutoplay === 'true');
     candidates.sort(([a], [b]) => priority(b) - priority(a));
-    const playing = new Set(candidates.slice(0, 2).map(([media]) => media));
+    const playing = new Set(candidates.map(([media]) => media));
     records.forEach((record, media) => {
       if (!record.video || !record.started) return;
-      if (playing.has(media) && (!conserveData || record.manual)) {
+      if (playing.has(media)) {
+        if (!media.paused || record.playPending) return;
+        media.muted = true;
+        media.defaultMuted = true;
+        media.playsInline = true;
+        record.playPending = true;
         media.play().catch(() => {
-          if (!signal.aborted && media.paused) actionButton(media, 'Play preview', () => { record.manual = true; media.play().catch(() => failed(media)); });
-        });
+          // Retry silently; a browser-level autoplay denial must never add UI.
+          if (!signal.aborted && media.paused && visible(media)) {
+            const attempt = record.playRetries || 0;
+            if (attempt < 3) {
+              record.playRetries = attempt + 1;
+              retryLater(syncPlayback, 500 * 2 ** attempt);
+            }
+          }
+        }).finally(() => { record.playPending = false; });
       } else media.pause();
     });
   };
@@ -192,19 +223,14 @@ export function initMediaLoading(root) {
       }
     }, { priority: () => priority(media) + 10 });
   };
-  const requestVideo = (media, manual = false) => {
+  const requestVideo = media => {
     const record = records.get(media);
-    record.manual ||= manual;
     if (record.started || signal.aborted || record.failed) return;
-    if (conserveData && !record.manual) {
-      actionButton(media, 'Play preview', () => requestVideo(media, true));
-      return;
-    }
     // Give the lightweight poster first claim on the connection.
     if (media.dataset.mediaPoster && !record.posterComplete) { requestPoster(media); return; }
     record.started = true;
     enqueue(() => new Promise(resolve => {
-      if (!record.near && !record.manual) { record.started = false; resolve(); return; }
+      if (!record.near) { record.started = false; resolve(); return; }
       let done = false;
       const finish = success => {
         if (done) return;
@@ -214,7 +240,7 @@ export function initMediaLoading(root) {
         media.removeEventListener('loadeddata', loaded);
         media.removeEventListener('error', errored);
         if (!signal.aborted) {
-          if (success) { record.failed = false; state(media, 'ready'); removeButton(media); syncPlayback(); }
+          if (success) { record.failed = false; record.loadRetries = 0; state(media, 'ready'); removeButton(media); syncPlayback(); }
           else { media.pause(); media.removeAttribute('src'); media.load(); failed(media); }
         }
         resolve();
@@ -227,6 +253,8 @@ export function initMediaLoading(root) {
       media.addEventListener('loadeddata', loaded);
       media.addEventListener('error', errored);
       media.preload = 'auto';
+      media.autoplay = true;
+      media.controls = false;
       media.src = media.dataset.mediaSrc;
       media.load();
     }), { video: true, priority: () => priority(media) - 5 });
@@ -261,7 +289,7 @@ export function initMediaLoading(root) {
         // Keep an already displayed frame while buffering; no new skeleton.
         if (media.dataset.mediaPosterReady && media.readyState < 2) state(media, 'poster');
       }, { signal });
-      media.addEventListener('playing', () => { state(media, 'ready'); removeButton(media); }, { signal });
+      media.addEventListener('playing', () => { records.get(media).playRetries = 0; state(media, 'ready'); removeButton(media); }, { signal });
       videoObserver.observe(media);
       playbackObserver.observe(media);
     }
@@ -273,8 +301,23 @@ export function initMediaLoading(root) {
     }
   });
   document.addEventListener('visibilitychange', syncPlayback, { signal });
+  // Retry in the same event as ordinary interaction, including on Safari.
+  document.addEventListener('pointerdown', syncPlayback, { passive: true, signal });
+  document.addEventListener('keydown', syncPlayback, { signal });
+  window.addEventListener('pageshow', syncPlayback, { signal });
+  window.addEventListener('online', () => {
+    records.forEach((record, media) => {
+      if (!record.video) return;
+      record.playRetries = 0;
+      record.loadRetries = 0;
+      if (record.failed) { record.failed = false; record.started = false; }
+      if (record.near) requestVideo(media);
+    });
+    syncPlayback();
+  }, { signal });
   dispose = () => {
     controller.abort();
+    retryTimers.forEach(clearTimeout);
     nearbyObserver.disconnect();
     videoObserver.disconnect();
     playbackObserver.disconnect();

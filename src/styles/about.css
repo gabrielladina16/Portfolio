@@ -1,3 +1,8 @@
+.about-page {
+  --about-column-gap: 100px;
+  --about-detail-width: calc((var(--work-shell) - var(--about-column-gap)) / 2);
+}
+
 .about-shell {
   width: var(--work-shell);
   margin-inline: auto;
@@ -74,7 +79,7 @@
 .about-interests-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 100px;
+  gap: var(--about-column-gap);
   margin-top: 76px;
 }
 
@@ -113,7 +118,7 @@
 
 .about-section-title span { color: inherit; }
 .about-timeline { display: grid; gap: 58px; }
-.about-entry { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 48px; }
+.about-entry { display: grid; grid-template-columns: minmax(0, 1fr) var(--about-detail-width); gap: 48px; }
 .about-entry h3,
 .about-entry .about-date {
   margin: 0;
@@ -125,10 +130,10 @@
 .about-education .about-timeline { gap: 36px; }
 
 @media (max-width: 900px) {
+  .about-page { --about-column-gap: 48px; }
   .about-intro-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 36px; }
-  .about-interests-grid { gap: 48px; }
   .about-segment > .about-shell { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 32px; }
-  .about-entry { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 24px; }
+  .about-entry { gap: 24px; }
 }
 
 @media (max-width: 680px) {
