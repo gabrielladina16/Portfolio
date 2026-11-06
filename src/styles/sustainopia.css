@@ -22,7 +22,7 @@
 .sustainopia-analysis-points p { margin: 8px 0 0; color: #b6b6b6; font: 500 var(--description-size)/1.4 var(--sans); }
 .sustainopia-challenges { padding-top: var(--sustainopia-segment-top); }
 .sustainopia-challenges-intro { padding-bottom: clamp(48px, 5vw, 80px); }
-.sustainopia-challenges-band { background: #fff; padding-block: 28px 56px; }
+.sustainopia-challenges-band { background: var(--paper); padding-block: 28px 56px; }
 .sustainopia-challenges-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; padding: 0; list-style: none; }
 .sustainopia-challenge-art { height: clamp(180px, 18vw, 280px); display: flex; align-items: flex-end; justify-content: center; }
 .sustainopia-challenge-art img { display: block; width: 100%; max-height: 100%; object-fit: contain; object-position: center bottom; }
@@ -56,7 +56,7 @@
 .sustainopia-plan-legend ol { margin: 0; padding-left: 1.5em; }
 .sustainopia-plan-legend li { padding-left: .1em; margin-bottom: 5px; }
 .sustainopia-drawings { padding-bottom: clamp(60px, 7vw, 120px); }
-.sustainopia-drawings-window { overflow: hidden; background: #fff; padding-block: 16px; }
+.sustainopia-drawings-window { overflow: hidden; background: var(--paper); padding-block: 16px; }
 .sustainopia-drawings-window:focus-visible { outline: 2px solid #35676b; outline-offset: -4px; }
 .sustainopia-drawings-track { display: flex; width: max-content; animation: sustainopia-drawings-scroll 45s linear infinite; }
 .sustainopia-drawings-group { --drawing-height: clamp(240px, 24vw, 400px); display: flex; align-items: center; gap: 48px; padding-right: 48px; flex-shrink: 0; }

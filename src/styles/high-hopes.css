@@ -288,7 +288,7 @@
 .hh-terrain-board--compact::before { width: 49.6269%; height: 201.5038%; }
 
 /* Light, full-width media areas with the site's existing fine grain. */
-.high-hopes-asset-surface { width: 100vw; margin-left: calc((100% - 100vw) / 2); padding-block: clamp(24px, 2.5vw, 40px); background: #f4f4f2; }
+.high-hopes-asset-surface { width: 100vw; margin-left: calc((100% - 100vw) / 2); padding-block: clamp(24px, 2.5vw, 40px); background: var(--paper); }
 .high-hopes-asset-surface .hh-terrain-board,
 .high-hopes-asset-surface .hh-environment-board { background: transparent; border-radius: 0; }
 .high-hopes-asset-surface .hh-terrain-board::before,
@@ -297,11 +297,11 @@
 .high-hopes-asset-surface .hh-environment-board { margin-top: clamp(28px, 4vw, 48px); }
 
 /* Environment uses light title bands and white media surfaces. */
-.high-hopes-environment { background: #eeedeb; color: var(--ink); }
+.high-hopes-environment { background: var(--paper); color: var(--ink); }
 .high-hopes-environment .bocil-feature-intro > p { color: var(--body-on-light); }
 .high-hopes-environment .bocil-feature-intro h2 span,
 .high-hopes-environment .high-hopes-asset-group .typelab-system-label { color: #777773; }
-.high-hopes-environment .high-hopes-asset-surface { background: #fff; }
+.high-hopes-environment .high-hopes-asset-surface { background: var(--paper); }
 
 .high-hopes-case > .high-hopes-story { min-height: 0; }
 .high-hopes-story .bocil-feature-intro > p { color: var(--body-on-dark); }

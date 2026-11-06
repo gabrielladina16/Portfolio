@@ -204,7 +204,7 @@
 .project-info h3 { margin: 0; font-size: 23px; letter-spacing: -.035em; }
 .project-info > p { margin: 1px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
 .project-meta { grid-column: 1 / -1; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; }
-.page-work .project-card { padding: 10px 10px 30px; border: 0; border-radius: 14px; background: #f4f4f2; box-shadow: none; transition: background-color .32s ease; }
+.page-work .project-card { padding: 10px 10px 30px; border: 0; border-radius: 14px; background: var(--paper); box-shadow: none; transition: background-color .32s ease; }
 .page-work .project-card:hover { background: #dededb; }
 .page-work .project-visual { aspect-ratio: 1.42; border-radius: 10px; }
 .page-work .placeholder-ui { padding: 8% 9% 0; }

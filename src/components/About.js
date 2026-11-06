@@ -65,10 +65,6 @@ export function About() {
           <h2 class="about-section-title reveal" id="about-education-title">Education</h2>
           <div class="about-timeline">
             <div class="about-entry reveal">
-              <p class="about-date">2026</p>
-              <div><h3>Apple Developer Academy, Bali</h3><p>App development, UI/UX design, Swift</p></div>
-            </div>
-            <div class="about-entry reveal">
               <p class="about-date">2020–2024</p>
               <div><h3>Universitas Indonesia</h3><p class="about-role">Bachelor of Architecture</p></div>
             </div>

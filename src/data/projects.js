@@ -1,6 +1,7 @@
-export const projects = [
+const allProjects = [
   {
     id: "adapenyu",
+    archived: true,
     number: "01",
     title: "AdaPenyu",
     summary: "A sea turtle identification app that helps conservators recognise individuals and track their lives over time.",
@@ -56,3 +57,6 @@ export const projects = [
     tone: "moss",
   },
 ];
+
+// Keep unfinished projects available for later without showing them publicly.
+export const projects = allProjects.filter((project) => !project.archived);

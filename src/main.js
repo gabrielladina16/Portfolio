@@ -7,7 +7,6 @@ import { GrabCaseStudy } from "./components/GrabCaseStudy.js";
 import { BrewTimeCaseStudy } from "./components/BrewTimeCaseStudy.js";
 import { TypeLabCaseStudy } from "./components/TypeLabCaseStudy.js";
 import { SustainopiaCaseStudy } from "./components/SustainopiaCaseStudy.js";
-import { Playground } from "./components/Playground.js";
 import { About } from "./components/About.js";
 import { initInteractions } from "./utils/interactions.js";
 import { prepareMedia, initMediaLoading } from "./utils/mediaLoading.js";
@@ -20,12 +19,11 @@ const pages = {
   typelab: () => TypeLabCaseStudy(),
   brewtime: () => BrewTimeCaseStudy(),
   sustainopia: () => SustainopiaCaseStudy(),
-  playground: () => Playground(),
   about: () => About(),
 };
 
 function getRoute() {
-  return ({ "#/work/higher-hopes": "higher-hopes", "#/work/high-hopes": "higher-hopes", "#/work/bocil": "bocil", "#/work/grab": "grab", "#/work/typelab": "typelab", "#/work/brewtime": "brewtime", "#/work/sustainopia": "sustainopia", "#/playground": "playground", "#/about": "about" })[location.hash] || "work";
+  return ({ "#/work/higher-hopes": "higher-hopes", "#/work/high-hopes": "higher-hopes", "#/work/bocil": "bocil", "#/work/grab": "grab", "#/work/typelab": "typelab", "#/work/brewtime": "brewtime", "#/work/sustainopia": "sustainopia", "#/about": "about" })[location.hash] || "work";
 }
 
 function renderPage() {

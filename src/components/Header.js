@@ -13,7 +13,6 @@ export function Header() {
       </button>
       <nav class="main-nav" id="main-nav" aria-label="Main navigation">
         <a href="#/work" data-route="work">Work</a>
-        <a href="#/playground" data-route="playground">Playground</a>
         <a href="#/about" data-route="about">About</a>
       </nav>
     </header>`;

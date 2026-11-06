@@ -14,7 +14,7 @@
 }
 .site-header::before {
   /* Keep a visible surface when browser/OS transparency effects are disabled. */
-  background: linear-gradient(to bottom, rgba(240,239,233,.28), rgba(240,239,233,.12) 55%, transparent);
+  background: linear-gradient(to bottom, rgba(235,235,233,.28), rgba(235,235,233,.12) 55%, transparent);
   backdrop-filter: blur(10px) saturate(105%); -webkit-backdrop-filter: blur(10px) saturate(105%);
 }
 .site-header::after {
@@ -55,7 +55,7 @@
 .holding-page { min-height: 100svh; }
 
 /* 2.5D paper keychain Home */
-.keychain-home { position: relative; min-height: 100svh; overflow: hidden; background-color: #f4f4f2; background-image: linear-gradient(rgba(17,17,15,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,15,.035) 1px, transparent 1px); background-size: 24px 24px; }
+.keychain-home { position: relative; min-height: 100svh; overflow: hidden; background-color: var(--paper); background-image: linear-gradient(rgba(17,17,15,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,15,.035) 1px, transparent 1px); background-size: 24px 24px; }
 .keychain-copy { position: absolute; z-index: 8; right: 32px; bottom: 22px; left: 32px; width: auto; }
 .keychain-copy > p, .keychain-copy > span { color: #7c7c77; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .keychain-copy > p { margin: 0 0 7px; }
@@ -94,7 +94,7 @@
 .text-link { display: inline-flex; align-items: center; gap: 7px; padding-bottom: 5px; border-bottom: 1px solid var(--ink); font-size: 13px; font-weight: 600; }
 
 .work { padding: 130px 0 160px; }
-.page-work { position: relative; min-height: 100vh; background-color: #f4f4f2; }
+.page-work { position: relative; min-height: 100vh; background-color: var(--paper); }
 .page-work::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(17,17,15,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,15,.035) 1px, transparent 1px); background-size: 18px 18px; -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.7) 72%, transparent 100%); mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.7) 72%, transparent 100%); }
 .work { position: relative; z-index: 1; }
 .page-work::before { opacity: var(--work-grid-opacity); }
@@ -144,7 +144,7 @@
 .paper-project-visual .placeholder-window { height: 88%; }
 
 /* Bocil case study */
-.page-bocil, .page-typelab { background: #f4f4f2; }
+.page-bocil, .page-typelab { background: var(--paper); }
 .bocil-case { color: #111; font-family: var(--sans); }
 .typelab-case .typelab-hero-media::before { background: #a8a8a8; }
 .typelab-case .typelab-exploration { color: var(--body-on-dark); }
@@ -233,7 +233,7 @@
 .bocil-feature-media:not(.bocil-focus-media) { --media-columns: minmax(0,3fr) minmax(0,7fr); }
 .bocil-feature-media figure { min-height: 520px; padding: 46px; }
 .bocil-feature-media .bocil-image { max-height: 610px; }
-.bocil-feature--focus { background: #f4f4f2; color: #111; }
+.bocil-feature--focus { background: var(--paper); color: #111; }
 .bocil-feature--focus .bocil-feature-intro > p { color: var(--body-on-light); }
 .bocil-feature--focus .bocil-feature-media figure { background: #c9dfed; }
 .bocil-focus-media { --media-columns: minmax(0,3fr) minmax(0,7fr); }
@@ -358,7 +358,7 @@
   }
 }
 
-.bocil-feature--final { background: #f4f4f2; }
+.bocil-feature--final { background: var(--paper); }
 .bocil-feature--final .bocil-feature-intro > p { color: var(--body-on-light); }
 /* Final app demonstration over the Tahoe night wallpaper. */
 .bocil-final-showcase {
@@ -429,7 +429,7 @@ body[data-route="bocil"], body[data-route="typelab"], body[data-route="sustainop
 }
 
 /* Fade the full-width prototype photo into the overview above it. */
-.bocil-research-photo { margin: 0; width: 100%; background: #f4f4f2; }
+.bocil-research-photo { margin: 0; width: 100%; background: var(--paper); }
 .bocil-research-photo img {
   display: block;
   width: 100%; height: auto;
